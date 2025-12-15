@@ -1,0 +1,244 @@
+.sidebar {
+  width: 200px;
+  min-width: 200px;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.logo-bracket {
+  font-weight: 300;
+}
+
+.logo-text {
+  letter-spacing: 2px;
+}
+
+.logo-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.version-tag {
+  font-size: 0.65rem;
+  margin-top: 4px;
+}
+
+.sidebar-divider {
+  text-align: center;
+  font-size: 0.7rem;
+  padding: 0 8px;
+}
+
+/* Navigation */
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 0;
+}
+
+.nav-section {
+  padding: 0 8px;
+}
+
+.nav-section-title {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 0;
+  margin: 0;
+  transition: all 0.2s ease;
+  text-align: left;
+  border-left: 2px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(0, 255, 65, 0.05);
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--accent-cyan);
+  border-left: 2px solid var(--accent-cyan);
+  box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.05);
+}
+
+.nav-indicator {
+  color: var(--accent-green);
+  width: 12px;
+}
+
+.nav-icon {
+  font-size: 0.9rem;
+  width: 16px;
+  text-align: center;
+}
+
+.nav-label {
+  flex: 1;
+  text-transform: lowercase;
+}
+
+.nav-shortcut {
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+.nav-item:hover .nav-shortcut,
+.nav-item.active .nav-shortcut {
+  opacity: 1;
+  color: var(--accent-yellow);
+}
+
+/* Sidebar Stats */
+.sidebar-stats {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.75rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.social-link:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.65rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .sidebar-header {
+    width: 100%;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .sidebar-divider {
+    display: none;
+  }
+  
+  .sidebar-nav {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  .nav-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .nav-section-title {
+    display: none;
+  }
+  
+  .nav-item {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .nav-item.active {
+    border-left: none;
+    border-bottom: 2px solid var(--accent-cyan);
+  }
+  
+  .nav-indicator {
+    display: none;
+  }
+  
+  .nav-shortcut {
+    display: none;
+  }
+  
+  .sidebar-stats,
+  .sidebar-footer {
+    display: none;
+  }
+}
