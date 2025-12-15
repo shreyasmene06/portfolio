@@ -21,7 +21,6 @@ The portfolio mimics a terminal environment with ASCII art banners, command-line
 - Contact: Contact information in JSON format
 
 **Visual Effects**
-- Matrix rain background animation
 - CRT scanline overlay
 - Glowing text effects
 - Smooth section transitions
