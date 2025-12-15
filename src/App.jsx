@@ -13,7 +13,7 @@ const PROFILE = {
     degree: 'B.Tech Computer Science and Engineering',
     specialization: 'Artificial Intelligence and Machine Learning',
     university: 'VIT Bhopal University',
-    year: 'First Year',
+    year: 'Second Year',
     cgpa: '9.0'
   },
   schooling: {
@@ -34,12 +34,12 @@ const PROFILE = {
   experience: {
     role: 'MERN Stack Developer Intern',
     company: 'IIT Ropar',
-    duration: 'May 2025',
-    description: 'Building robust web applications with hands-on experience in full-stack development',
+    duration: 'May 2025 – Dec 2025',
+    description: 'Built robust web applications with hands-on experience in full-stack development',
     highlights: [
-      'Developing scalable web applications using MERN stack',
-      'Collaborating with research teams on innovative projects',
-      'Implementing best practices in code quality and testing'
+      'Developed scalable web applications using MERN stack',
+      'Collaborated with research teams on innovative projects',
+      'Implemented best practices in code quality and testing'
     ]
   },
   skills: {
@@ -279,18 +279,18 @@ function AboutSection({ profile }) {
           <PanelHeader title="cat bio.txt" />
           <div className="panel-content">
             <p className="bio-text">
-              I'm a first-year B.Tech Computer Science and Engineering student at 
+              I'm a second-year B.Tech Computer Science and Engineering student at 
               <span className="text-cyan"> VIT Bhopal University</span>, specializing in 
               <span className="text-purple"> Artificial Intelligence and Machine Learning</span>.
             </p>
             <p className="bio-text">
-              Currently working as a <span className="text-yellow">MERN Stack Developer Intern</span> at 
-              <span className="text-green"> IIT Ropar</span>, where I'm gaining hands-on experience 
-              building robust web applications.
+              Former <span className="text-yellow">MERN Stack Developer Intern</span> at 
+              <span className="text-green"> IIT Ropar</span>, now channeling that experience into 
+              <span className="text-cyan"> Data Science</span>, <span className="text-yellow">MERN Stack</span>, 
+              and sharpening my <span className="text-purple">DSA skills in Java</span>.
             </p>
             <p className="bio-text">
-              I'm passionate about exploring new technologies, participating in hackathons, 
-              and working on challenging personal projects.
+              Always exploring, always building from hackathons to side projects that push my limits.
             </p>
           </div>
         </div>
