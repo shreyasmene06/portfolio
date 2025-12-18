@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
-import MatrixRain from './components/MatrixRain';
 import './App.css';
-
-// Profile Data
+import Snowfall from 'react-snowfall';
 const PROFILE = {
   name: 'Shreyas Mene',
   title: 'Full Stack Developer & AI/ML Enthusiast',
@@ -113,9 +111,18 @@ function App() {
 
   return (
     <div className="app-container">
-      <MatrixRain />
       <div className="scanlines"></div>
-      
+      <Snowfall 
+        color="#82C3D9"
+        snowflakeCount={150}
+        style={{
+          position: 'fixed',
+          width: '100vw',
+          height: '100vh',
+          zIndex: 999,
+          pointerEvents: 'none'
+        }}
+      />
       <div className="main-layout">
         <Sidebar 
           activeSection={activeSection} 
