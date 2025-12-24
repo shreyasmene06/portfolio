@@ -87,7 +87,9 @@ const PROFILE = {
     github: 'github.com/shreyasmene',
     location: 'Bhilai, Chhattisgarh, India'
   },
-  interests: ['Exploring new technologies', 'Hackathons', 'Personal challenging projects']
+  interests: ['Exploring new technologies', 'Hackathons', 'Personal challenging projects'],
+  resumeUrl: import.meta.env.BASE_URL + 'resume.pdf',
+  profilePhoto: import.meta.env.BASE_URL + 'profile.jpg'
 };
 
 function App() {
@@ -174,71 +176,157 @@ function App() {
 function HomeSection({ profile, onNavigate }) {
   return (
     <div className="section home-section">
-      <div className="ascii-banner">
-        <pre className="ascii-art glow-cyan">
-{`
-  ███████╗██╗  ██╗██████╗ ███████╗██╗   ██╗ █████╗ ███████╗
-  ██╔════╝██║  ██║██╔══██╗██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝
-  ███████╗███████║██████╔╝█████╗   ╚████╔╝ ███████║███████╗
-  ╚════██║██╔══██║██╔══██╗██╔══╝    ╚██╔╝  ██╔══██║╚════██║
-  ███████║██║  ██║██║  ██║███████╗   ██║   ██║  ██║███████║
-  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
-`}
-        </pre>
-      </div>
-      
-      <div className="hero-content">
-        <div className="hero-text">
-          <h1 className="hero-name">
-            <span className="text-green glow-green">$ </span>
-            <span className="typing-text">{profile.name}</span>
-          </h1>
-          <h2 className="hero-title text-cyan">{profile.title}</h2>
-          <p className="hero-tagline text-muted">{profile.tagline}</p>
+      {/* Clean Hero Layout */}
+      <div className="hero-container">
+        {/* Left: Photo */}
+        <div className="hero-photo-section">
+          <div className="photo-wrapper">
+            <div className="photo-ring"></div>
+            <div className="photo-frame-clean">
+              <img 
+                src={profile.profilePhoto} 
+                alt={profile.name}
+                className="profile-photo"
+              />
+            </div>
+            <div className="photo-status">
+              <span className="status-dot"></span>
+              <span>Available</span>
+            </div>
+          </div>
         </div>
 
-        <div className="status-box">
-          <div className="box-border">
-            <span className="corner tl">╭</span>
-            <span className="border-h"></span>
-            <span className="box-title">STATUS</span>
-            <span className="border-h"></span>
-            <span className="corner tr">╮</span>
+        {/* Right: Info */}
+        <div className="hero-content-section">
+          <div className="hero-intro">
+            <span className="intro-label text-muted">Hello, I'm</span>
+            <h1 className="hero-name-clean">
+              <span className="name-text">{profile.name}</span>
+            </h1>
+            <h2 className="hero-role">
+              <span className="role-bracket text-cyan">&lt;</span><span className="role-text">{profile.title}</span><span className="role-bracket text-cyan">/&gt;</span>
+            </h2>
           </div>
-          <div className="status-content">
-            <div className="status-item">
-              <span className="status-icon">●</span>
-              <span className="text-green">Available for opportunities</span>
+
+          <p className="hero-description">
+            {profile.tagline}
+          </p>
+
+          <div className="hero-highlights">
+            <div className="highlight-item">
+              <i className="ri-graduation-cap-line text-cyan"></i>
+              <span>B.Tech CSE @ <span className="text-yellow">VIT Bhopal</span></span>
             </div>
-            <div className="status-item">
-              <span className="status-icon text-cyan">◆</span>
-              <span>Former Intern @ <span className="text-yellow">IIT Ropar</span></span>
+            <div className="highlight-item">
+              <i className="ri-cpu-line text-purple"></i>
+              <span>AI & Machine Learning</span>
             </div>
-            <div className="status-item">
-              <span className="status-icon text-purple">▸</span>
-              <span>CGPA: <span className="text-green">{profile.education.cgpa}</span></span>
+            <div className="highlight-item">
+              <i className="ri-building-line text-green"></i>
+              <span>Ex-Intern @ <span className="text-yellow">IIT Ropar</span></span>
             </div>
           </div>
-          <div className="box-border bottom">
-            <span className="corner bl">╰</span>
-            <span className="border-h full"></span>
-            <span className="corner br">╯</span>
+
+          <div className="hero-actions">
+            <a 
+              href={profile.resumeUrl} 
+              download="Shreyas_Mene_Resume.pdf"
+              className="action-btn-primary"
+            >
+              <i className="ri-download-2-line"></i>
+              <span>Download CV</span>
+            </a>
+            <button 
+              className="action-btn-secondary"
+              onClick={() => onNavigate('contact')}
+            >
+              <i className="ri-mail-line"></i>
+              <span>Contact Me</span>
+            </button>
+          </div>
+
+          <div className="hero-socials">
+            <a href={`https://${profile.contact.github}`} target="_blank" rel="noopener noreferrer" className="social-link">
+              <i className="ri-github-fill"></i>
+            </a>
+            <a href={`https://${profile.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="social-link">
+              <i className="ri-linkedin-fill"></i>
+            </a>
+            <a href={`mailto:${profile.contact.email}`} className="social-link">
+              <i className="ri-mail-fill"></i>
+            </a>
           </div>
         </div>
       </div>
 
-      <div className="quick-nav">
-        <span className="text-muted">Quick Navigation:</span>
-        <div className="nav-buttons">
-          {['about', 'skills', 'projects', 'experience', 'contact'].map(section => (
+      {/* Stats Bar */}
+      <div className="stats-bar">
+        <div className="stat-item-home">
+          <span className="stat-number text-green">{profile.education.cgpa}</span>
+          <span className="stat-label-home">CGPA</span>
+        </div>
+        <div className="stat-divider"></div>
+        <div className="stat-item-home">
+          <span className="stat-number text-cyan">{profile.projects.length}+</span>
+          <span className="stat-label-home">Projects</span>
+        </div>
+        <div className="stat-divider"></div>
+        <div className="stat-item-home">
+          <span className="stat-number text-purple">{profile.certifications.length}</span>
+          <span className="stat-label-home">Certifications</span>
+        </div>
+        <div className="stat-divider"></div>
+        <div className="stat-item-home">
+          <span className="stat-number text-yellow">1</span>
+          <span className="stat-label-home">Internship</span>
+        </div>
+      </div>
+
+      {/* About Me Section */}
+      <div className="home-about">
+        <div className="about-header-home">
+          <span className="about-line"></span>
+          <h3 className="about-title-home">
+            <i className="ri-user-3-line text-cyan"></i>
+            About Me
+          </h3>
+          <span className="about-line"></span>
+        </div>
+
+        <div className="about-content-home">
+          <p className="about-text">
+            I'm a second-year <span className="text-cyan">B.Tech CSE</span> student at 
+            <span className="text-yellow"> VIT Bhopal University</span>, specializing in 
+            <span className="text-purple"> AI & Machine Learning</span>. As a former 
+            <span className="text-green"> MERN Stack Intern at IIT Ropar</span>, I blend 
+            full-stack development with data science expertise to build intelligent, 
+            scalable applications.
+          </p>
+        </div>
+
+        <div className="interests-row">
+          {profile.interests.map((interest, i) => (
+            <div key={i} className="interest-chip">
+              <i className="ri-star-line text-yellow"></i>
+              <span>{interest}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Quick Nav */}
+      <div className="quick-nav-clean">
+        <span className="nav-hint text-muted">
+          <i className="ri-arrow-down-line"></i> Explore More
+        </span>
+        <div className="nav-pills">
+          {['skills', 'projects', 'experience', 'education', 'contact'].map(section => (
             <button 
               key={section} 
-              className="nav-btn"
+              className="nav-pill"
               onClick={() => onNavigate(section)}
             >
-              <span className="text-cyan">[</span>
-              <span className="text-yellow">{section}</span>
-              <span className="text-cyan">]</span>
+              {section}
             </button>
           ))}
         </div>
@@ -255,6 +343,43 @@ function AboutSection({ profile }) {
     <div className="section about-section">
       <SectionHeader icon="ri-user-line" title="About Me" />
       
+      {/* Profile Photo with Glitch Effect */}
+      <div className="profile-hero">
+        <div className="profile-photo-container">
+          <div className="photo-frame">
+            <div className="photo-glitch" data-text="SHREYAS">
+              <img 
+                src={profile.profilePhoto} 
+                alt={profile.name}
+                className="profile-photo"
+              />
+              <div className="photo-overlay"></div>
+              <div className="photo-scanline"></div>
+            </div>
+            <div className="photo-corners">
+              <span className="corner tl"></span>
+              <span className="corner tr"></span>
+              <span className="corner bl"></span>
+              <span className="corner br"></span>
+            </div>
+          </div>
+          <div className="photo-label">
+            <span className="text-green">$</span> cat profile.jpg
+          </div>
+        </div>
+        <div className="profile-actions">
+          <a 
+            href={profile.resumeUrl} 
+            download="Shreyas_Mene_Resume.pdf"
+            className="resume-btn"
+          >
+            <span className="btn-icon"><i className="ri-file-download-line"></i></span>
+            <span className="btn-text">Download Resume</span>
+            <span className="btn-glow"></span>
+          </a>
+        </div>
+      </div>
+
       <div className="about-grid">
         <div className="panel info-panel">
           <PanelHeader title="whoami" />

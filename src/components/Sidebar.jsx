@@ -2,7 +2,6 @@ import './Sidebar.css';
 
 const NAV_ITEMS = [
   { id: 'home', icon: 'ri-home-4-line', label: 'home', shortcut: 'h' },
-  { id: 'about', icon: 'ri-user-line', label: 'about', shortcut: 'a' },
   { id: 'skills', icon: 'ri-tools-line', label: 'skills', shortcut: 's' },
   { id: 'projects', icon: 'ri-rocket-line', label: 'projects', shortcut: 'p' },
   { id: 'experience', icon: 'ri-briefcase-line', label: 'experience', shortcut: 'e' },
