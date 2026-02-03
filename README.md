@@ -4,7 +4,7 @@ A terminal-themed personal portfolio website built with React and Vite. Features
 
 ## Live Demo
 
-[View Portfolio](https://shreyasmene.github.io/portfolio)
+[View Portfolio](https://shreyasmene.in)
 
 ## Features
 
