@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
 import './App.css';
-import Snowfall from 'react-snowfall';
 const PROFILE = {
   name: 'Shreyas Mene',
   title: 'Full Stack Developer & AI/ML Enthusiast',
@@ -113,25 +112,13 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="scanlines"></div>
-      <Snowfall 
-        color="#82C3D9"
-        snowflakeCount={150}
-        style={{
-          position: 'fixed',
-          width: '100vw',
-          height: '100vh',
-          zIndex: 999,
-          pointerEvents: 'none'
-        }}
-      />
       <div className="main-layout">
-        <Sidebar 
-          activeSection={activeSection} 
+        <Sidebar
+          activeSection={activeSection}
           onSectionChange={setActiveSection}
           profile={PROFILE}
         />
-        
+
         <main className="content-area">
           <div className="window-header">
             <div className="window-controls">
@@ -149,7 +136,7 @@ function App() {
               <span className="text-muted">{currentTime.toLocaleTimeString()}</span>
             </div>
           </div>
-          
+
           <div className="content-wrapper">
             {activeSection === 'home' && <HomeSection profile={PROFILE} onNavigate={setActiveSection} />}
             {activeSection === 'about' && <AboutSection profile={PROFILE} />}
@@ -161,8 +148,8 @@ function App() {
           </div>
         </main>
       </div>
-      
-      <StatusBar 
+
+      <StatusBar
         activeSection={activeSection}
         profile={PROFILE}
       />
@@ -183,8 +170,8 @@ function HomeSection({ profile, onNavigate }) {
           <div className="photo-wrapper">
             <div className="photo-ring"></div>
             <div className="photo-frame-clean">
-              <img 
-                src={profile.profilePhoto} 
+              <img
+                src={profile.profilePhoto}
                 alt={profile.name}
                 className="profile-photo"
               />
@@ -228,15 +215,15 @@ function HomeSection({ profile, onNavigate }) {
           </div>
 
           <div className="hero-actions">
-            <a 
-              href={profile.resumeUrl} 
+            <a
+              href={profile.resumeUrl}
               download="Shreyas_Mene_Resume.pdf"
               className="action-btn-primary"
             >
               <i className="ri-download-2-line"></i>
               <span>Download CV</span>
             </a>
-            <button 
+            <button
               className="action-btn-secondary"
               onClick={() => onNavigate('contact')}
             >
@@ -295,11 +282,11 @@ function HomeSection({ profile, onNavigate }) {
 
         <div className="about-content-home">
           <p className="about-text">
-            I'm a second-year <span className="text-cyan">B.Tech CSE</span> student at 
-            <span className="text-yellow"> VIT Bhopal University</span>, specializing in 
-            <span className="text-purple"> AI & Machine Learning</span>. As a former 
-            <span className="text-green"> MERN Stack Intern at IIT Ropar</span>, I blend 
-            full-stack development with data science expertise to build intelligent, 
+            I'm a second-year <span className="text-cyan">B.Tech CSE</span> student at
+            <span className="text-yellow"> VIT Bhopal University</span>, specializing in
+            <span className="text-purple"> AI & Machine Learning</span>. As a former
+            <span className="text-green"> MERN Stack Intern at IIT Ropar</span>, I blend
+            full-stack development with data science expertise to build intelligent,
             scalable applications.
           </p>
         </div>
@@ -321,8 +308,8 @@ function HomeSection({ profile, onNavigate }) {
         </span>
         <div className="nav-pills">
           {['skills', 'projects', 'experience', 'education', 'contact'].map(section => (
-            <button 
-              key={section} 
+            <button
+              key={section}
               className="nav-pill"
               onClick={() => onNavigate(section)}
             >
@@ -342,14 +329,14 @@ function AboutSection({ profile }) {
   return (
     <div className="section about-section">
       <SectionHeader icon="ri-user-line" title="About Me" />
-      
+
       {/* Profile Photo with Glitch Effect */}
       <div className="profile-hero">
         <div className="profile-photo-container">
           <div className="photo-frame">
             <div className="photo-glitch" data-text="SHREYAS">
-              <img 
-                src={profile.profilePhoto} 
+              <img
+                src={profile.profilePhoto}
                 alt={profile.name}
                 className="profile-photo"
               />
@@ -368,8 +355,8 @@ function AboutSection({ profile }) {
           </div>
         </div>
         <div className="profile-actions">
-          <a 
-            href={profile.resumeUrl} 
+          <a
+            href={profile.resumeUrl}
             download="Shreyas_Mene_Resume.pdf"
             className="resume-btn"
           >
@@ -411,14 +398,14 @@ function AboutSection({ profile }) {
           <PanelHeader title="cat bio.txt" />
           <div className="panel-content">
             <p className="bio-text">
-              I'm a second-year B.Tech Computer Science and Engineering student at 
-              <span className="text-cyan"> VIT Bhopal University</span>, specializing in 
+              I'm a second-year B.Tech Computer Science and Engineering student at
+              <span className="text-cyan"> VIT Bhopal University</span>, specializing in
               <span className="text-purple"> Artificial Intelligence and Machine Learning</span>.
             </p>
             <p className="bio-text">
-              Former <span className="text-yellow">MERN Stack Developer Intern</span> at 
-              <span className="text-green"> IIT Ropar</span>, now channeling that experience into 
-              <span className="text-cyan"> Data Science</span>, <span className="text-yellow">MERN Stack</span>, 
+              Former <span className="text-yellow">MERN Stack Developer Intern</span> at
+              <span className="text-green"> IIT Ropar</span>, now channeling that experience into
+              <span className="text-cyan"> Data Science</span>, <span className="text-yellow">MERN Stack</span>,
               and sharpening my <span className="text-purple">DSA skills in Java</span>.
             </p>
             <p className="bio-text">
@@ -459,7 +446,7 @@ function SkillsSection({ profile }) {
   return (
     <div className="section skills-section">
       <SectionHeader icon="ri-tools-fill" title="Technical Skills" />
-      
+
       <div className="skills-grid">
         {skillCategories.map(({ key, icon, title, color }) => (
           <div key={key} className="panel skill-panel">
@@ -473,9 +460,9 @@ function SkillsSection({ profile }) {
                       <span>{skill}</span>
                     </div>
                     <div className="skill-bar">
-                      <div 
-                        className={`skill-fill ${color}`} 
-                        style={{ 
+                      <div
+                        className={`skill-fill ${color}`}
+                        style={{
                           width: `${85 - i * 5}%`,
                           animationDelay: `${i * 0.1}s`
                         }}
@@ -488,7 +475,7 @@ function SkillsSection({ profile }) {
           </div>
         ))}
       </div>
-      
+
       <div className="skills-summary panel">
         <PanelHeader title="stats --summary" />
         <div className="panel-content stats-grid">
@@ -521,7 +508,7 @@ function ProjectsSection({ profile }) {
   return (
     <div className="section projects-section">
       <SectionHeader icon="ri-rocket-line" title="Projects" />
-      
+
       <div className="projects-grid">
         {profile.projects.map((project, index) => (
           <div key={index} className="panel project-panel">
@@ -573,7 +560,7 @@ function ExperienceSection({ profile }) {
   return (
     <div className="section experience-section">
       <SectionHeader icon="ri-briefcase-line" title="Experience" />
-      
+
       <div className="timeline">
         <div className="timeline-item">
           <div className="timeline-marker">
@@ -610,7 +597,7 @@ function ExperienceSection({ profile }) {
         <PanelHeader title="what's next?" />
         <div className="panel-content">
           <p className="text-muted">
-            Actively seeking opportunities to grow as a developer and contribute to 
+            Actively seeking opportunities to grow as a developer and contribute to
             innovative projects. Open to internships, collaborations, and exciting challenges!
           </p>
         </div>
@@ -626,7 +613,7 @@ function EducationSection({ profile }) {
   return (
     <div className="section education-section">
       <SectionHeader icon="ri-graduation-cap-line" title="Education" />
-      
+
       {/* University */}
       <div className="panel education-panel">
         <div className="edu-header">
@@ -729,7 +716,7 @@ function ContactSection({ profile }) {
   return (
     <div className="section contact-section">
       <SectionHeader icon="ri-mail-send-line" title="Contact" />
-      
+
       <div className="contact-content">
         <div className="panel contact-panel">
           <PanelHeader title="cat contact.json" />
@@ -757,7 +744,7 @@ function ContactSection({ profile }) {
           <PanelHeader title="send_message()" />
           <div className="panel-content">
             <p className="text-muted">
-              Feel free to reach out! I'm always open to discussing new projects, 
+              Feel free to reach out! I'm always open to discussing new projects,
               creative ideas, or opportunities to be part of something amazing.
             </p>
             <div className="cta-buttons">
@@ -808,7 +795,7 @@ function PanelHeader({ title, icon }) {
 // ═══════════════════════════════════════════════════════════════
 function BootScreen() {
   const [bootLines, setBootLines] = useState([]);
-  
+
   const bootSequence = [
     { text: '█▓▒░ SHREYAS_PORTFOLIO v1.0.0 ░▒▓█', delay: 0 },
     { text: '', delay: 100 },
@@ -837,8 +824,8 @@ function BootScreen() {
     <div className="boot-screen">
       <div className="boot-content">
         {bootLines.map((line, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className={`boot-line ${line.includes('✓') ? 'text-green' : ''} ${line.includes('█▓') ? 'text-cyan glow-cyan' : ''}`}
           >
             {line}
