@@ -391,3 +391,44 @@
     gap: 12px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LIGHT THEME OVERRIDES – Terminal                               */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Skill tags – use semantic muted backgrounds */
+[data-theme="light"] .skill-tag.frontend {
+  background: rgba(154, 103, 0, 0.06);
+}
+
+[data-theme="light"] .skill-tag.backend {
+  background: rgba(26, 127, 55, 0.06);
+}
+
+[data-theme="light"] .skill-tag.language {
+  background: rgba(9, 105, 218, 0.06);
+}
+
+[data-theme="light"] .skill-tag.tool {
+  background: rgba(130, 80, 223, 0.06);
+}
+
+/* Skill tag hover – no deep shadow */
+[data-theme="light"] .skill-tag:hover {
+  box-shadow: 0 4px 12px rgba(36, 41, 47, 0.08);
+}
+
+/* Tech tags in projects */
+[data-theme="light"] .tech-tag {
+  background: rgba(9, 105, 218, 0.06);
+}
+
+/* Social link in terminal */
+[data-theme="light"] .social-link:hover {
+  box-shadow: 0 4px 12px rgba(9, 105, 218, 0.1);
+}
+
+/* Contact link glow removal */
+[data-theme="light"] .contact-link:hover {
+  text-shadow: none;
+}

@@ -95,6 +95,18 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isBooting, setIsBooting] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('portfolio-theme');
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('portfolio-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   useEffect(() => {
     const bootTimer = setTimeout(() => setIsBooting(false), 2500);
@@ -132,8 +144,11 @@ function App() {
               <span className="text-cyan">~/{activeSection}</span>
               <span className="cursor-blink">█</span>
             </div>
-            <div className="window-time">
-              <span className="text-muted">{currentTime.toLocaleTimeString()}</span>
+            <div className="window-actions">
+              <span className="text-muted window-time">{currentTime.toLocaleTimeString()}</span>
+              <button className="theme-toggle" onClick={toggleTheme} title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+                <i className={theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line'}></i>
+              </button>
             </div>
           </div>
 

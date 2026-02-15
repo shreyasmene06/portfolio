@@ -242,3 +242,23 @@
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LIGHT THEME OVERRIDES – Sidebar                                */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Nav item hover – no neon tint */
+[data-theme="light"] .nav-item:hover {
+  background: rgba(9, 105, 218, 0.06);
+}
+
+/* Active nav item – clean blue highlight instead of glow */
+[data-theme="light"] .nav-item.active {
+  background: rgba(9, 105, 218, 0.08);
+  box-shadow: none;
+}
+
+/* Social link hover */
+[data-theme="light"] .social-link:hover {
+  background: rgba(9, 105, 218, 0.06);
+}

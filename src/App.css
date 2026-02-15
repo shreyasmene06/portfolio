@@ -94,6 +94,35 @@
   font-size: 0.75rem;
 }
 
+.window-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+  background: rgba(255, 204, 0, 0.1);
+  transform: rotate(15deg);
+}
+
 .cursor-blink {
   animation: blink 1s infinite;
   margin-left: 4px;
@@ -1596,4 +1625,153 @@
     padding: 8px 16px;
     font-size: 0.8rem;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LIGHT THEME OVERRIDES – App.css Components                     */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Disable scanlines in light mode */
+[data-theme="light"] .scanlines {
+  opacity: 0;
+}
+
+/* Panels – clean white cards with subtle shadow */
+[data-theme="light"] .panel {
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(36, 41, 47, 0.08);
+}
+
+[data-theme="light"] .panel:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 4px 16px rgba(9, 105, 218, 0.1);
+}
+
+/* Window header controls – remove glow in light mode */
+[data-theme="light"] .control.close { box-shadow: none; }
+[data-theme="light"] .control.minimize { box-shadow: none; }
+[data-theme="light"] .control.maximize { box-shadow: none; }
+
+/* Photo frame – softer shadow */
+[data-theme="light"] .photo-frame-clean {
+  box-shadow: 0 4px 20px rgba(36, 41, 47, 0.12);
+}
+
+/* Photo ring – subtle in light mode */
+[data-theme="light"] .photo-ring {
+  opacity: 0.6;
+}
+
+/* Status dot – no glow */
+[data-theme="light"] .status-dot {
+  box-shadow: none;
+  animation: statusPulseLight 2s ease-in-out infinite;
+}
+
+@keyframes statusPulseLight {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Stats bar */
+[data-theme="light"] .stats-bar {
+  background: rgba(246, 248, 250, 0.8);
+}
+
+/* Home about section */
+[data-theme="light"] .home-about {
+  background: rgba(246, 248, 250, 0.6);
+}
+
+/* Hero bio */
+[data-theme="light"] .hero-bio {
+  background: rgba(246, 248, 250, 0.6);
+}
+
+/* Interest chips */
+[data-theme="light"] .interest-chip {
+  background: rgba(154, 103, 0, 0.06);
+  border-color: rgba(154, 103, 0, 0.2);
+}
+
+[data-theme="light"] .interest-chip:hover {
+  background: rgba(154, 103, 0, 0.1);
+}
+
+/* Nav pill hover */
+[data-theme="light"] .nav-pill:hover {
+  background: rgba(9, 105, 218, 0.06);
+}
+
+/* Nav button hover */
+[data-theme="light"] .nav-btn:hover {
+  background: rgba(26, 127, 55, 0.06);
+  box-shadow: 0 4px 12px rgba(26, 127, 55, 0.1);
+}
+
+/* Photo status badge */
+[data-theme="light"] .photo-status {
+  background: rgba(26, 127, 55, 0.06);
+}
+
+/* Action button primary – keep gradient, softer hover */
+[data-theme="light"] .action-btn-primary:hover {
+  box-shadow: 0 10px 30px rgba(26, 127, 55, 0.2);
+}
+
+/* Social link hover */
+[data-theme="light"] .social-link:hover {
+  box-shadow: 0 5px 20px rgba(9, 105, 218, 0.12);
+}
+
+/* Skill bar glow removal */
+[data-theme="light"] .skill-fill.yellow { box-shadow: none; }
+[data-theme="light"] .skill-fill.green { box-shadow: none; }
+[data-theme="light"] .skill-fill.cyan { box-shadow: none; }
+[data-theme="light"] .skill-fill.purple { box-shadow: none; }
+
+/* Project panel hover */
+[data-theme="light"] .project-panel:hover {
+  box-shadow: 0 8px 30px rgba(9, 105, 218, 0.1);
+}
+
+/* Timeline marker – no glow */
+[data-theme="light"] .marker-dot {
+  box-shadow: none;
+}
+
+/* CTA buttons */
+[data-theme="light"] .cta-btn:hover {
+  box-shadow: 0 4px 12px rgba(26, 127, 55, 0.1);
+}
+
+[data-theme="light"] .cta-btn.primary {
+  background: rgba(26, 127, 55, 0.06);
+}
+
+[data-theme="light"] .cta-btn.primary:hover {
+  background: rgba(26, 127, 55, 0.12);
+}
+
+/* Resume button – softer hover */
+[data-theme="light"] .resume-btn:hover {
+  box-shadow: 0 10px 30px rgba(26, 127, 55, 0.15);
+}
+
+/* Photo frame hex – remove glow */
+[data-theme="light"] .photo-frame {
+  animation: none;
+  box-shadow: 0 4px 20px rgba(36, 41, 47, 0.1);
+}
+
+/* Boot screen – use light background */
+[data-theme="light"] .boot-screen {
+  background: var(--bg-primary);
+}
+
+/* Theme toggle – light mode specific */
+[data-theme="light"] .theme-toggle:hover {
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+  background: rgba(130, 80, 223, 0.08);
 }

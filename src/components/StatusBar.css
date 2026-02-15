@@ -70,3 +70,13 @@
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LIGHT THEME OVERRIDES – StatusBar                              */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Mode indicator – subtle in light mode */
+[data-theme="light"] .mode-indicator {
+  background: rgba(26, 127, 55, 0.06);
+  border-color: rgba(26, 127, 55, 0.2);
+}

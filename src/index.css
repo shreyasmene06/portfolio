@@ -142,3 +142,82 @@ body {
 .cursor-blink {
   animation: blink 1s infinite;
 }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LIGHT THEME – "Schematic Engineering"                          */
+/* ═══════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eaeef2;
+  --bg-terminal: #ffffff;
+
+  --text-primary: #24292f;
+  --text-secondary: #57606a;
+  --text-muted: #8c959f;
+
+  /* Darkened accents for white-background readability */
+  --accent-green: #1a7f37;
+  --accent-cyan: #0969da;
+  --accent-purple: #8250df;
+  --accent-pink: #bf3989;
+  --accent-yellow: #9a6700;
+  --accent-orange: #bc4c00;
+  --accent-red: #cf222e;
+
+  --border-color: #d0d7de;
+  --border-glow: rgba(9, 105, 218, 0.3);
+
+  /* Disable neon glows in light mode */
+  --glow-green: none;
+  --glow-cyan: none;
+  --glow-purple: none;
+}
+
+/* Scrollbar - Light */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f6f8fa;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #c0c8d0;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #8c959f;
+}
+
+/* Selection - Light */
+[data-theme="light"] ::selection {
+  background: #0969da;
+  color: #ffffff;
+}
+
+/* Remove neon glow text-shadows in light mode */
+[data-theme="light"] .glow-green,
+[data-theme="light"] .glow-cyan,
+[data-theme="light"] .glow-purple,
+[data-theme="light"] .glow-yellow {
+  text-shadow: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* GEOMETRIC GRID BACKGROUNDS (Both Themes)                       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Dark theme: subtle blue-tinted engineering grid */
+.content-wrapper {
+  background:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Light theme: crisp graph-paper / schematic grid */
+[data-theme="light"] .content-wrapper {
+  background:
+    linear-gradient(rgba(9, 105, 218, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9, 105, 218, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
