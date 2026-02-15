@@ -1,10 +1,12 @@
 .sidebar {
   width: 200px;
   min-width: 200px;
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--glass-border);
   overflow-y: auto;
 }
 
@@ -79,7 +81,7 @@
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   cursor: pointer;
   border-radius: 0;
@@ -90,15 +92,15 @@
 }
 
 .nav-item:hover {
-  background: rgba(0, 255, 65, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
 }
 
 .nav-item.active {
-  background: rgba(0, 212, 255, 0.1);
+  background: rgba(0, 212, 255, 0.06);
   color: var(--accent-cyan);
   border-left: 2px solid var(--accent-cyan);
-  box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.05);
+  box-shadow: none;
 }
 
 .nav-indicator {
@@ -131,7 +133,7 @@
 /* Sidebar Stats */
 .sidebar-stats {
   padding: 12px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--glass-border);
   font-size: 0.75rem;
 }
 
@@ -144,7 +146,7 @@
 /* Sidebar Footer */
 .sidebar-footer {
   padding: 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--glass-border);
 }
 
 .social-links {
@@ -159,8 +161,8 @@
   align-items: center;
   justify-content: center;
   padding: 6px 10px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
   border-radius: 4px;
   color: var(--text-secondary);
   text-decoration: none;
@@ -169,8 +171,8 @@
 }
 
 .social-link:hover {
-  background: rgba(0, 212, 255, 0.1);
-  border-color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.06);
+  border-color: var(--glass-border-hover);
   color: var(--text-primary);
 }
 
@@ -246,6 +248,14 @@
 /* ═══════════════════════════════════════════════════════════════ */
 /* LIGHT THEME OVERRIDES – Sidebar                                */
 /* ═══════════════════════════════════════════════════════════════ */
+
+/* Remove glass in light mode */
+[data-theme="light"] .sidebar {
+  background: var(--bg-secondary);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-right: 1px solid var(--border-color);
+}
 
 /* Nav item hover – no neon tint */
 [data-theme="light"] .nav-item:hover {

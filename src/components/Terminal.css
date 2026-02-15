@@ -45,7 +45,7 @@
   align-items: center;
   gap: 0;
   padding-top: 8px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--glass-border);
   margin-top: auto;
 }
 
@@ -155,32 +155,32 @@
 }
 
 .skill-tag.frontend {
-  background: rgba(255, 204, 0, 0.1);
+  background: rgba(234, 179, 8, 0.08);
   border-color: var(--accent-yellow);
   color: var(--accent-yellow);
 }
 
 .skill-tag.backend {
-  background: rgba(0, 255, 65, 0.1);
+  background: rgba(45, 212, 140, 0.08);
   border-color: var(--accent-green);
   color: var(--accent-green);
 }
 
 .skill-tag.language {
-  background: rgba(0, 212, 255, 0.1);
+  background: rgba(0, 212, 255, 0.08);
   border-color: var(--accent-cyan);
   color: var(--accent-cyan);
 }
 
 .skill-tag.tool {
-  background: rgba(189, 0, 255, 0.1);
+  background: rgba(168, 85, 247, 0.08);
   border-color: var(--accent-purple);
   color: var(--accent-purple);
 }
 
 .skill-tag:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Projects */
@@ -206,8 +206,8 @@
 
 .tech-tag {
   padding: 2px 8px;
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   border-radius: 3px;
   font-size: 0.7rem;
   color: var(--accent-cyan);
@@ -346,13 +346,13 @@
   color: var(--accent-cyan);
   text-decoration: none;
   padding: 8px 16px;
-  border: 1px solid var(--accent-cyan);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   border-radius: 4px;
   transition: all 0.2s ease;
 }
 
 .social-link:hover {
-  background: rgba(0, 212, 255, 0.1);
+  background: rgba(0, 212, 255, 0.06);
   box-shadow: var(--glow-cyan);
   transform: translateY(-2px);
 }

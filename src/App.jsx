@@ -124,6 +124,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="noise-overlay" />
       <div className="main-layout">
         <Sidebar
           activeSection={activeSection}
@@ -178,6 +179,13 @@ function App() {
 function HomeSection({ profile, onNavigate }) {
   return (
     <div className="section home-section">
+      {/* Floating Orbs Background */}
+      <div className="floating-orbs">
+        <div className="orb orb-1" />
+        <div className="orb orb-2" />
+        <div className="orb orb-3" />
+      </div>
+
       {/* Clean Hero Layout */}
       <div className="hero-container">
         {/* Left: Photo */}
