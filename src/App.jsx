@@ -11,7 +11,7 @@ const PROFILE = {
     specialization: 'Artificial Intelligence and Machine Learning',
     university: 'VIT Bhopal University',
     year: 'Second Year',
-    cgpa: '9.0'
+    cgpa: '9.02'
   },
   schooling: {
     school: 'Delhi Public School, Bhilai',

@@ -58,7 +58,7 @@ function Sidebar({ activeSection, onSectionChange, profile }) {
       <div className="sidebar-stats">
         <div className="stat-row">
           <span className="text-muted">CGPA:</span>
-          <span className="text-green glow-green">{profile?.education?.cgpa || '9.0'}</span>
+          <span className="text-green glow-green">{profile?.education?.cgpa || '9.02'}</span>
         </div>
         <div className="stat-row">
           <span className="text-muted">Status:</span>
