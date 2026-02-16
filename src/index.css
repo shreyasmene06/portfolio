@@ -23,10 +23,10 @@
   --border-color: hsl(0, 0%, 20%);
   --border-glow: rgba(45, 212, 140, 0.2);
 
-  /* Glass panel - More transparent, sharper borders */
-  --glass-bg: rgba(20, 20, 25, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-border-hover: rgba(255, 255, 255, 0.18);
+  /* Glass panel - Enhanced with better backdrop blur */
+  --glass-bg: rgba(20, 20, 25, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-border-hover: rgba(255, 255, 255, 0.25);
 
   /* Fonts */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -199,9 +199,9 @@ body {
   --border-color: #d0d7de;
   --border-glow: rgba(9, 105, 218, 0.3);
 
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --glass-border-hover: rgba(0, 0, 0, 0.14);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.12);
+  --glass-border-hover: rgba(0, 0, 0, 0.2);
 
   /* Disable neon glows in light mode */
   --glow-green: none;
@@ -243,16 +243,16 @@ body {
 /* Dark theme: subtle blue-tinted engineering grid – 40×40px, higher contrast */
 .content-wrapper {
   background:
-    linear-gradient(rgba(200, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200, 255, 255, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(200, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 255, 255, 0.12) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Light theme: crisp graph-paper / schematic grid */
+/* Light theme: crisp graph-paper / schematic grid with better visibility */
 [data-theme="light"] .content-wrapper {
   background:
-    linear-gradient(rgba(9, 105, 218, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(9, 105, 218, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(9, 105, 218, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9, 105, 218, 0.15) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 

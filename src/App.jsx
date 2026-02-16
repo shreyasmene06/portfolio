@@ -47,6 +47,14 @@ const PROFILE = {
   },
   projects: [
     {
+      name: 'VaxTrust',
+      tech: ['Python', 'Flask', 'React', 'React Native', 'Firebase', 'scikit-learn', 'NumPy', 'Pandas'],
+      description: 'AI-driven transparency platform democratizing vaccine safety data through decentralized peer reporting and automated anomaly detection. Utilizes an ensemble of user feedback and official health records to generate dynamic trust scores, identifying safety signals with 90% anomaly detection precision across distributed vaccine batches.',
+      icon: 'ri-health-book-line',
+      liveUrl: 'https://nimble-rolypoly-04e203.netlify.app/',
+      sourceUrl: null
+    },
+    {
       name: 'CatXForest',
       tech: ['Python', 'Flask', 'scikit-learn', 'XGBoost', 'CatBoost', 'Chart.js'],
       description: 'AI-powered career recommendation system using hybrid ensemble learning (Random Forest + XGBoost + CatBoost) with 84.97% accuracy across 17 career categories. Features real-time predictions and visual analytics.',
