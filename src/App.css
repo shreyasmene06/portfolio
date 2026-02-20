@@ -1,3 +1,40 @@
+/* ═══ Shiny Button @property declarations ═══ */
+@property --shiny-gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --shiny-gradient-percent {
+  syntax: '<percentage>';
+  initial-value: 5%;
+  inherits: false;
+}
+
+@keyframes shiny-rotate {
+  0% {
+    --shiny-gradient-angle: 0deg;
+  }
+
+  100% {
+    --shiny-gradient-angle: 360deg;
+  }
+}
+
+@keyframes shiny-shimmer {
+  0% {
+    --shiny-gradient-percent: 5%;
+  }
+
+  50% {
+    --shiny-gradient-percent: 15%;
+  }
+
+  100% {
+    --shiny-gradient-percent: 5%;
+  }
+}
+
 .app-container {
   min-height: 100vh;
   display: flex;
@@ -413,54 +450,100 @@
   margin-bottom: 24px;
 }
 
-.action-btn-primary {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  background: var(--accent-green);
-  border: none;
-  border-radius: 8px;
-  color: #141416;
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.action-btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(45, 212, 140, 0.25);
-  filter: brightness(1.1);
-}
-
-.action-btn-primary i {
-  font-size: 1.1rem;
-}
-
+/* ═══ Shiny Button – shared base ═══ */
+.action-btn-primary,
 .action-btn-secondary {
-  display: flex;
+  --shiny-hl: #6366f1;
+  --shiny-hl-rgb: 99, 102, 241;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 24px;
-  background: transparent;
-  border: 1px solid var(--glass-border);
-  border-radius: 8px;
-  color: var(--text-primary);
+  padding: 14px 32px;
+  border-radius: 50px;
   font-family: var(--font-sans);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  text-decoration: none;
+  isolation: isolate;
+  overflow: hidden;
+  color: #ffffff;
+  background:
+    linear-gradient(#000000, #000000) padding-box,
+    conic-gradient(from var(--shiny-gradient-angle),
+      var(--shiny-hl),
+      transparent 30%,
+      transparent 70%,
+      var(--shiny-hl)) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 0 12px rgba(var(--shiny-hl-rgb), 0.15);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  animation:
+    shiny-rotate 3s linear infinite,
+    shiny-shimmer 3s ease-in-out infinite;
 }
 
+/* Dot pattern – scanning mask */
+.action-btn-primary::before,
+.action-btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 2px 2px,
+      rgba(var(--shiny-hl-rgb), 0.4) 1px,
+      transparent 1px);
+  background-size: 6px 6px;
+  mask-image: conic-gradient(from var(--shiny-gradient-angle),
+      transparent 0%,
+      black var(--shiny-gradient-percent),
+      transparent 12%);
+  -webkit-mask-image: conic-gradient(from var(--shiny-gradient-angle),
+      transparent 0%,
+      black var(--shiny-gradient-percent),
+      transparent 12%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Inner bottom glow */
+.action-btn-primary::after,
+.action-btn-secondary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 100%,
+      rgba(var(--shiny-hl-rgb), 0.15) 0%,
+      transparent 60%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.action-btn-primary:hover,
 .action-btn-secondary:hover {
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-  transform: translateY(-3px);
-  background: rgba(0, 212, 255, 0.05);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 20px rgba(var(--shiny-hl-rgb), 0.3),
+    inset 0 -4px 16px rgba(var(--shiny-hl-rgb), 0.15);
+}
+
+.action-btn-primary i,
+.action-btn-secondary i {
+  font-size: 1.1rem;
+}
+
+/* Primary – indigo blue (like the original) */
+.action-btn-primary {
+  --shiny-hl: #6366f1;
+  --shiny-hl-rgb: 99, 102, 241;
+}
+
+/* Secondary – cyan teal */
+.action-btn-secondary {
+  --shiny-hl: #00d4ff;
+  --shiny-hl-rgb: 0, 212, 255;
 }
 
 /* Social Links */
@@ -1916,9 +1999,41 @@
   background: rgba(26, 127, 55, 0.06);
 }
 
-/* Action button primary – keep gradient, softer hover */
+/* ═══ Light theme – shiny buttons: clean, solid look ═══ */
+[data-theme="light"] .action-btn-primary,
+[data-theme="light"] .action-btn-secondary {
+  animation: none;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .action-btn-primary::before,
+[data-theme="light"] .action-btn-secondary::before,
+[data-theme="light"] .action-btn-primary::after,
+[data-theme="light"] .action-btn-secondary::after {
+  display: none;
+}
+
+[data-theme="light"] .action-btn-primary {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  color: #ffffff;
+}
+
 [data-theme="light"] .action-btn-primary:hover {
-  box-shadow: 0 10px 30px rgba(26, 127, 55, 0.2);
+  box-shadow: 0 6px 20px rgba(26, 127, 55, 0.25);
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .action-btn-secondary:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(9, 105, 218, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(9, 105, 218, 0.12);
 }
 
 /* Social link hover */
