@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
 import FlipTextReveal from './components/FlipTextReveal';
+import GlowingEffect from './components/GlowingEffect';
 import './App.css';
 const PROFILE = {
   name: 'Shreyas Mene',
@@ -278,6 +279,7 @@ function HomeSection({ profile, onNavigate }) {
 
       {/* Stats Bar */}
       <div className="stats-bar">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <div className="stat-item-home">
           <span className="stat-number text-green">{profile.education.cgpa}</span>
           <span className="stat-label-home">CGPA</span>
@@ -301,6 +303,7 @@ function HomeSection({ profile, onNavigate }) {
 
       {/* About Me Section */}
       <div className="home-about">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <div className="about-header-home">
           <span className="about-line"></span>
           <h3 className="about-title-home">
@@ -399,6 +402,7 @@ function AboutSection({ profile }) {
 
       <div className="about-grid">
         <div className="panel info-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
           <PanelHeader title="whoami" />
           <div className="panel-content">
             <div className="info-row">
@@ -425,6 +429,7 @@ function AboutSection({ profile }) {
         </div>
 
         <div className="panel bio-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
           <PanelHeader title="cat bio.txt" />
           <div className="panel-content">
             <p className="bio-text">
@@ -445,6 +450,7 @@ function AboutSection({ profile }) {
         </div>
 
         <div className="panel interests-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
           <PanelHeader title="interests.json" />
           <div className="panel-content">
             <div className="interests-list">
@@ -480,6 +486,7 @@ function SkillsSection({ profile }) {
       <div className="skills-grid">
         {skillCategories.map(({ key, icon, title, color }) => (
           <div key={key} className="panel skill-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
             <PanelHeader title={title} icon={icon} />
             <div className="panel-content">
               <div className="skill-bars">
@@ -507,6 +514,7 @@ function SkillsSection({ profile }) {
       </div>
 
       <div className="skills-summary panel">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <PanelHeader title="stats --summary" />
         <div className="panel-content stats-grid">
           <div className="stat-item">
@@ -542,6 +550,7 @@ function ProjectsSection({ profile }) {
       <div className="projects-grid">
         {profile.projects.map((project, index) => (
           <div key={index} className="panel project-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
             <div className="project-header">
               <span className="project-icon"><i className={project.icon}></i></span>
               <span className="project-name text-green glow-green">{project.name}</span>
@@ -598,6 +607,7 @@ function ExperienceSection({ profile }) {
             <span className="marker-line"></span>
           </div>
           <div className="panel experience-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
             <div className="exp-header">
               <div className="exp-title-row">
                 <span className="exp-role text-yellow glow-yellow">{profile.experience.role}</span>
@@ -624,6 +634,7 @@ function ExperienceSection({ profile }) {
       </div>
 
       <div className="panel future-panel">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <PanelHeader title="what's next?" />
         <div className="panel-content">
           <p className="text-muted">
@@ -646,6 +657,7 @@ function EducationSection({ profile }) {
 
       {/* University */}
       <div className="panel education-panel">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <div className="edu-header">
           <div className="edu-icon"><i className="ri-building-2-line"></i></div>
           <div className="edu-info">
@@ -698,6 +710,7 @@ function EducationSection({ profile }) {
 
       {/* Certifications */}
       <div className="panel certifications-panel">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <PanelHeader title="certifications" icon="ri-award-line" />
         <div className="panel-content">
           <div className="cert-list">
@@ -715,6 +728,7 @@ function EducationSection({ profile }) {
       </div>
 
       <div className="panel coursework-panel">
+        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
         <PanelHeader title="relevant coursework" />
         <div className="panel-content">
           <div className="course-grid">
@@ -749,6 +763,7 @@ function ContactSection({ profile }) {
 
       <div className="contact-content">
         <div className="panel contact-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
           <PanelHeader title="cat contact.json" />
           <div className="panel-content contact-json">
             <span className="text-purple">{'{'}</span>
@@ -771,6 +786,7 @@ function ContactSection({ profile }) {
         </div>
 
         <div className="panel message-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
           <PanelHeader title="send_message()" />
           <div className="panel-content">
             <p className="text-muted">
