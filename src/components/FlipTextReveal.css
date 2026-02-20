@@ -1,0 +1,77 @@
+/* ═══════════════════════════════════════════════════════════════ */
+/* FLIP TEXT REVEAL — 3D Mechanical Flip Animation                */
+/* ═══════════════════════════════════════════════════════════════ */
+
+.flip-text-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    line-height: 1;
+    margin-left: 8px;
+    perspective: 800px;
+    transform-style: preserve-3d;
+}
+
+.flip-text-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 10px 0 8px 0;
+    display: inline-flex;
+    flex-wrap: wrap;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    transform-style: preserve-3d;
+    font-family: var(--font-sans);
+}
+
+/* Individual character — 3D flip-up */
+.flip-char {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform-origin: bottom center;
+
+    opacity: 0;
+    transform: rotateX(-90deg) translateY(20px);
+
+    animation: flipUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: calc(0.05s * var(--index));
+    will-change: transform, opacity;
+}
+
+/* Keyframe: rotate from -90° (hidden below) to 0° (visible) */
+@keyframes flipUp {
+    0% {
+        opacity: 0;
+        transform: rotateX(-90deg) translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg) translateY(0);
+    }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .flip-text-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .flip-text-title {
+        font-size: 1.4rem;
+    }
+}
+
+/* ── Accessibility: reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .flip-char {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}

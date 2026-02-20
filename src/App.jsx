@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
+import FlipTextReveal from './components/FlipTextReveal';
 import './App.css';
 const PROFILE = {
   name: 'Shreyas Mene',
@@ -218,9 +219,7 @@ function HomeSection({ profile, onNavigate }) {
         <div className="hero-content-section">
           <div className="hero-intro">
             <span className="intro-label text-muted">Hello, I'm</span>
-            <h1 className="hero-name-clean">
-              <span className="name-text">{profile.name}</span>
-            </h1>
+            <FlipTextReveal word={profile.name} />
             <h2 className="hero-role">
               <span className="role-bracket text-cyan">&lt;</span><span className="role-text">{profile.title}</span><span className="role-bracket text-cyan">/&gt;</span>
             </h2>
@@ -844,24 +843,33 @@ function BootScreen() {
   ];
 
   useEffect(() => {
-    bootSequence.forEach(({ text, delay }) => {
+    const timers = bootSequence.map(({ text, delay }) =>
       setTimeout(() => {
         setBootLines(prev => [...prev, text]);
-      }, delay);
-    });
+      }, delay)
+    );
+    return () => timers.forEach(t => clearTimeout(t));
   }, []);
 
   return (
     <div className="boot-screen">
       <div className="boot-content">
-        {bootLines.map((line, index) => (
-          <div
-            key={index}
-            className={`boot-line ${line.includes('✓') ? 'text-green' : ''} ${line.includes('█▓') ? 'text-cyan glow-cyan' : ''}`}
-          >
-            {line}
-          </div>
-        ))}
+        {bootLines.map((line, index) => {
+          const isTitle = line.includes('█▓');
+          const isSuccess = line.includes('✓');
+          const isEmpty = line === '';
+
+          let className = 'boot-line-shimmer';
+          if (isTitle) className = 'boot-line text-cyan glow-cyan';
+          else if (isSuccess) className = 'boot-line text-green';
+          else if (isEmpty) className = 'boot-line';
+
+          return (
+            <div key={index} className={className}>
+              {line}
+            </div>
+          );
+        })}
         <span className="cursor-blink text-green">█</span>
       </div>
     </div>
