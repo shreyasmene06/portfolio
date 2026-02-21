@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
 import FlipTextReveal from './components/FlipTextReveal';
 import GlowingEffect from './components/GlowingEffect';
+import WebcamPixelGrid from './components/WebcamPixelGrid';
 import './App.css';
 const PROFILE = {
   name: 'Shreyas Mene',
@@ -171,6 +172,25 @@ function App() {
             {activeSection === 'experience' && <ExperienceSection profile={PROFILE} />}
             {activeSection === 'education' && <EducationSection profile={PROFILE} />}
             {activeSection === 'contact' && <ContactSection profile={PROFILE} />}
+          </div>
+
+          {/* Full-page Webcam Pixel Grid Background */}
+          <div className={`pixel-grid-bg ${theme === 'light' ? 'pixel-grid-light' : ''}`}>
+            <WebcamPixelGrid
+              gridCols={64}
+              gridRows={48}
+              maxElevation={theme === 'dark' ? 10 : 4}
+              motionSensitivity={0.3}
+              elevationSmoothing={0.1}
+              colorMode="monochrome"
+              monochromeColor={theme === 'dark' ? '#1c1c22' : '#d0d7de'}
+              backgroundColor={theme === 'dark' ? '#141416' : '#ffffff'}
+              mirror={true}
+              gapRatio={0.08}
+              darken={theme === 'dark' ? 0.5 : 0.3}
+              borderColor={theme === 'dark' ? '#ffffff' : '#d0d7de'}
+              borderOpacity={theme === 'dark' ? 0.03 : 0.015}
+            />
           </div>
         </main>
       </div>

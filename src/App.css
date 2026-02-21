@@ -74,6 +74,7 @@
   border-left: 1px solid var(--border-color);
   overflow: hidden;
   position: relative;
+  min-height: 0;
 }
 
 /* Window Header */
@@ -265,6 +266,20 @@
   justify-content: center;
   position: relative;
   z-index: 1;
+}
+
+/* Webcam Pixel Grid — Full Page Background */
+.pixel-grid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Light theme: much more subtle */
+.pixel-grid-light {
+  opacity: 0.15;
 }
 
 /* Hero Container - Clean Layout */
@@ -1849,6 +1864,15 @@
   opacity: 0;
 }
 
+/* Light theme: ambient gradient background (matches dark theme's floating orb effect) */
+[data-theme="light"] .content-area {
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(165, 216, 255, 0.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 30%, rgba(208, 191, 255, 0.30) 0%, transparent 50%),
+    radial-gradient(ellipse at 35% 80%, rgba(178, 242, 187, 0.25) 0%, transparent 50%),
+    #ffffff;
+}
+
 /* Panels – clean white cards with enhanced shadow and borders */
 [data-theme="light"] .panel {
   background: #ffffff;
@@ -1999,41 +2023,38 @@
   background: rgba(26, 127, 55, 0.06);
 }
 
-/* ═══ Light theme – shiny buttons: clean, solid look ═══ */
+/* ═══ Light theme – shiny buttons with white fill ═══ */
 [data-theme="light"] .action-btn-primary,
 [data-theme="light"] .action-btn-secondary {
-  animation: none;
-  background: var(--bg-secondary);
-  border: 1.5px solid var(--border-color);
+  --shiny-hl: #6366f1;
+  --shiny-hl-rgb: 99, 102, 241;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    conic-gradient(from var(--shiny-gradient-angle),
+      var(--shiny-hl),
+      transparent 30%,
+      transparent 70%,
+      var(--shiny-hl)) border-box !important;
   color: var(--text-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-[data-theme="light"] .action-btn-primary::before,
-[data-theme="light"] .action-btn-secondary::before,
-[data-theme="light"] .action-btn-primary::after,
-[data-theme="light"] .action-btn-secondary::after {
-  display: none;
+  box-shadow: 0 0 10px rgba(var(--shiny-hl-rgb), 0.12);
 }
 
 [data-theme="light"] .action-btn-primary {
-  background: var(--accent-green);
-  border-color: var(--accent-green);
-  color: #ffffff;
+  --shiny-hl: #8250df;
+  --shiny-hl-rgb: 130, 80, 223;
 }
 
-[data-theme="light"] .action-btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(26, 127, 55, 0.25);
-  filter: brightness(1.05);
-  transform: translateY(-2px);
+[data-theme="light"] .action-btn-secondary {
+  --shiny-hl: #0969da;
+  --shiny-hl-rgb: 9, 105, 218;
 }
 
+[data-theme="light"] .action-btn-primary:hover,
 [data-theme="light"] .action-btn-secondary:hover {
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-  background: rgba(9, 105, 218, 0.06);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(9, 105, 218, 0.12);
+  box-shadow:
+    0 0 20px rgba(var(--shiny-hl-rgb), 0.2),
+    inset 0 -4px 12px rgba(var(--shiny-hl-rgb), 0.08);
 }
 
 /* Social link hover */

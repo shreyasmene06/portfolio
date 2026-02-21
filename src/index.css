@@ -89,76 +89,193 @@ body {
 }
 
 /* Utility classes */
-.text-green { color: var(--accent-green); }
-.text-cyan { color: var(--accent-cyan); }
-.text-purple { color: var(--accent-purple); }
-.text-pink { color: var(--accent-pink); }
-.text-yellow { color: var(--accent-yellow); }
-.text-orange { color: var(--accent-orange); }
-.text-red { color: var(--accent-red); }
-.text-muted { color: var(--text-muted); }
+.text-green {
+  color: var(--accent-green);
+}
+
+.text-cyan {
+  color: var(--accent-cyan);
+}
+
+.text-purple {
+  color: var(--accent-purple);
+}
+
+.text-pink {
+  color: var(--accent-pink);
+}
+
+.text-yellow {
+  color: var(--accent-yellow);
+}
+
+.text-orange {
+  color: var(--accent-orange);
+}
+
+.text-red {
+  color: var(--accent-red);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
 
 /* Glow effects – subtle */
-.glow-green { text-shadow: var(--glow-green); }
-.glow-cyan { text-shadow: var(--glow-cyan); }
-.glow-purple { text-shadow: var(--glow-purple); }
-.glow-yellow { text-shadow: 0 0 8px rgba(234, 179, 8, 0.25); }
+.glow-green {
+  text-shadow: var(--glow-green);
+}
+
+.glow-cyan {
+  text-shadow: var(--glow-cyan);
+}
+
+.glow-purple {
+  text-shadow: var(--glow-purple);
+}
+
+.glow-yellow {
+  text-shadow: 0 0 8px rgba(234, 179, 8, 0.25);
+}
 
 /* ── Animations ── */
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 @keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes matrixRain {
-  0% { transform: translateY(-100%); opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes orbDrift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -20px) scale(1.05); }
-  50% { transform: translate(-10px, -40px) scale(0.95); }
-  75% { transform: translate(-30px, -10px) scale(1.02); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+
+  50% {
+    transform: translate(-10px, -40px) scale(0.95);
+  }
+
+  75% {
+    transform: translate(-30px, -10px) scale(1.02);
+  }
 }
 
 .animate-fadeIn {
@@ -248,12 +365,9 @@ body {
   background-size: 40px 40px;
 }
 
-/* Light theme: crisp graph-paper / schematic grid with better visibility */
+/* Light theme: no grid lines – keep background clean */
 [data-theme="light"] .content-wrapper {
-  background:
-    linear-gradient(rgba(9, 105, 218, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(9, 105, 218, 0.15) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════ */
@@ -326,8 +440,25 @@ body {
   animation-delay: -3s;
 }
 
-[data-theme="light"] .floating-orbs {
-  display: none;
+/* Light theme: softer, pastel-tinted orbs for a subtle gradient feel */
+[data-theme="light"] .orb {
+  opacity: 0.18;
+  filter: blur(100px);
+}
+
+[data-theme="light"] .orb-1 {
+  background: #a5d8ff;
+  /* soft sky blue */
+}
+
+[data-theme="light"] .orb-2 {
+  background: #d0bfff;
+  /* soft lavender */
+}
+
+[data-theme="light"] .orb-3 {
+  background: #b2f2bb;
+  /* soft mint green */
 }
 
 /* ═══════════════════════════════════════════════════════════════ */
@@ -345,6 +476,8 @@ body {
 .version-tag,
 .sidebar-divider,
 .nav-shortcut,
-code, pre, .mono {
+code,
+pre,
+.mono {
   font-family: var(--font-mono);
 }

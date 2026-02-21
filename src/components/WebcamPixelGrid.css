@@ -1,0 +1,98 @@
+/* ═══════════════════════════════════════════════════════════════ */
+/* WEBCAM PIXEL GRID                                               */
+/* ═══════════════════════════════════════════════════════════════ */
+
+.wpg-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Hidden elements (video + processing canvas) */
+.wpg-hidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Display canvas */
+.wpg-display {
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s ease;
+}
+
+.wpg-visible {
+    opacity: 1;
+}
+
+.wpg-invisible {
+    opacity: 0;
+}
+
+/* Error popup */
+.wpg-error-popup {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 50;
+    padding: 16px 20px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-primary, #fff);
+    backdrop-filter: blur(10px);
+    max-width: 260px;
+}
+
+.wpg-error-text {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.wpg-error-sub {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: var(--text-muted, #888);
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+}
+
+.wpg-error-btn {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    background: rgba(0, 212, 255, 0.15);
+    color: var(--accent-cyan, #00d4ff);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    margin-right: 8px;
+}
+
+.wpg-error-btn:hover {
+    background: rgba(0, 212, 255, 0.25);
+    border-color: rgba(0, 212, 255, 0.5);
+}
+
+.wpg-error-dismiss {
+    display: inline-block;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    background: transparent;
+    color: var(--text-muted, #888);
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.wpg-error-dismiss:hover {
+    color: var(--text-primary, #fff);
+}
