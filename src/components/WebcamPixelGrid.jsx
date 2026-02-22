@@ -16,6 +16,8 @@ function WebcamPixelGrid({
     darken = 0,
     borderColor = '#ffffff',
     borderOpacity = 0.08,
+    motionShadow = false,
+    shadowOpacity = 0.6,
     className = '',
     onWebcamError,
     onWebcamReady,
@@ -240,59 +242,75 @@ function WebcamPixelGrid({
                 const offsetX = -elevation * 1.2;
                 const offsetY = -elevation * 1.8;
 
-                // Shadow
-                if (elevation > 0.5) {
-                    dispCtx.fillStyle = `rgba(0, 0, 0, ${Math.min(0.6, elevation * 0.04)})`;
-                    dispCtx.fillRect(
-                        x + gap / 2 + elevation * 1.5,
-                        y + gap / 2 + elevation * 2.0,
-                        cellSize - gap,
-                        cellSize - gap
-                    );
+                const motionAlpha = motionShadow
+                    ? Math.min(shadowOpacity, pixel.motion * shadowOpacity * 2.2)
+                    : 1;
+
+                if (motionShadow && motionAlpha < 0.02) {
+                    continue;
                 }
 
-                // Side faces for 3D effect
-                if (elevation > 0.5) {
-                    // Right side
-                    dispCtx.fillStyle = `rgb(${Math.max(0, pixel.r - 80)}, ${Math.max(0, pixel.g - 80)}, ${Math.max(0, pixel.b - 80)})`;
-                    dispCtx.beginPath();
-                    dispCtx.moveTo(x + cellSize - gap / 2 + offsetX, y + gap / 2 + offsetY);
-                    dispCtx.lineTo(x + cellSize - gap / 2, y + gap / 2);
-                    dispCtx.lineTo(x + cellSize - gap / 2, y + cellSize - gap / 2);
-                    dispCtx.lineTo(x + cellSize - gap / 2 + offsetX, y + cellSize - gap / 2 + offsetY);
-                    dispCtx.closePath();
-                    dispCtx.fill();
+                if (!motionShadow) {
+                    // Shadow
+                    if (elevation > 0.5) {
+                        dispCtx.fillStyle = `rgba(0, 0, 0, ${Math.min(0.6, elevation * 0.04)})`;
+                        dispCtx.fillRect(
+                            x + gap / 2 + elevation * 1.5,
+                            y + gap / 2 + elevation * 2.0,
+                            cellSize - gap,
+                            cellSize - gap
+                        );
+                    }
 
-                    // Bottom side
-                    dispCtx.fillStyle = `rgb(${Math.max(0, pixel.r - 50)}, ${Math.max(0, pixel.g - 50)}, ${Math.max(0, pixel.b - 50)})`;
-                    dispCtx.beginPath();
-                    dispCtx.moveTo(x + gap / 2 + offsetX, y + cellSize - gap / 2 + offsetY);
-                    dispCtx.lineTo(x + gap / 2, y + cellSize - gap / 2);
-                    dispCtx.lineTo(x + cellSize - gap / 2, y + cellSize - gap / 2);
-                    dispCtx.lineTo(x + cellSize - gap / 2 + offsetX, y + cellSize - gap / 2 + offsetY);
-                    dispCtx.closePath();
-                    dispCtx.fill();
+                    // Side faces for 3D effect
+                    if (elevation > 0.5) {
+                        // Right side
+                        dispCtx.fillStyle = `rgb(${Math.max(0, pixel.r - 80)}, ${Math.max(0, pixel.g - 80)}, ${Math.max(0, pixel.b - 80)})`;
+                        dispCtx.beginPath();
+                        dispCtx.moveTo(x + cellSize - gap / 2 + offsetX, y + gap / 2 + offsetY);
+                        dispCtx.lineTo(x + cellSize - gap / 2, y + gap / 2);
+                        dispCtx.lineTo(x + cellSize - gap / 2, y + cellSize - gap / 2);
+                        dispCtx.lineTo(x + cellSize - gap / 2 + offsetX, y + cellSize - gap / 2 + offsetY);
+                        dispCtx.closePath();
+                        dispCtx.fill();
+
+                        // Bottom side
+                        dispCtx.fillStyle = `rgb(${Math.max(0, pixel.r - 50)}, ${Math.max(0, pixel.g - 50)}, ${Math.max(0, pixel.b - 50)})`;
+                        dispCtx.beginPath();
+                        dispCtx.moveTo(x + gap / 2 + offsetX, y + cellSize - gap / 2 + offsetY);
+                        dispCtx.lineTo(x + gap / 2, y + cellSize - gap / 2);
+                        dispCtx.lineTo(x + cellSize - gap / 2, y + cellSize - gap / 2);
+                        dispCtx.lineTo(x + cellSize - gap / 2 + offsetX, y + cellSize - gap / 2 + offsetY);
+                        dispCtx.closePath();
+                        dispCtx.fill();
+                    }
                 }
 
                 // Top face
                 const brightness = 1 + elevation * 0.05;
-                dispCtx.fillStyle = `rgb(${Math.min(255, Math.round(pixel.r * brightness))}, ${Math.min(255, Math.round(pixel.g * brightness))}, ${Math.min(255, Math.round(pixel.b * brightness))})`;
+                dispCtx.globalAlpha = motionAlpha;
+                dispCtx.fillStyle = motionShadow
+                    ? `rgb(${monoRGB.r}, ${monoRGB.g}, ${monoRGB.b})`
+                    : `rgb(${Math.min(255, Math.round(pixel.r * brightness))}, ${Math.min(255, Math.round(pixel.g * brightness))}, ${Math.min(255, Math.round(pixel.b * brightness))})`;
                 dispCtx.fillRect(
                     x + gap / 2 + offsetX,
                     y + gap / 2 + offsetY,
                     cellSize - gap,
                     cellSize - gap
                 );
+                dispCtx.globalAlpha = 1;
 
-                // Border
-                dispCtx.strokeStyle = `rgba(${borderRGB.r}, ${borderRGB.g}, ${borderRGB.b}, ${borderOpacity + elevation * 0.008})`;
-                dispCtx.lineWidth = 0.5;
-                dispCtx.strokeRect(
-                    x + gap / 2 + offsetX,
-                    y + gap / 2 + offsetY,
-                    cellSize - gap,
-                    cellSize - gap
-                );
+                if (!motionShadow) {
+                    // Border
+                    dispCtx.strokeStyle = `rgba(${borderRGB.r}, ${borderRGB.g}, ${borderRGB.b}, ${borderOpacity + elevation * 0.008})`;
+                    dispCtx.lineWidth = 0.5;
+                    dispCtx.strokeRect(
+                        x + gap / 2 + offsetX,
+                        y + gap / 2 + offsetY,
+                        cellSize - gap,
+                        cellSize - gap
+                    );
+                }
             }
         }
 
@@ -301,6 +319,7 @@ function WebcamPixelGrid({
         gridCols, gridRows, mirror, motionSensitivity, colorMode, monoRGB,
         maxElevation, elevationSmoothing, backgroundColor, gapRatio,
         invertColors, darken, borderRGB, borderOpacity,
+        motionShadow, shadowOpacity,
     ]);
 
     // Start render loop when webcam is ready
@@ -311,7 +330,9 @@ function WebcamPixelGrid({
     }, [isReady, render]);
 
     return (
-        <div className={`wpg-container ${className}`}>
+        <div
+            className={`wpg-container ${className} ${error && showErrorPopup ? 'wpg-has-error' : ''}`}
+        >
             <video ref={videoRef} className="wpg-hidden" playsInline muted />
             <canvas ref={processingCanvasRef} className="wpg-hidden" />
             <canvas

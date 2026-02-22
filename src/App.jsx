@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
-import FlipTextReveal from './components/FlipTextReveal';
 import GlowingEffect from './components/GlowingEffect';
-import WebcamPixelGrid from './components/WebcamPixelGrid';
+import DotShaderBackground from './components/DotShaderBackground';
+import CardTilt3D from './components/CardTilt3D';
+import { CardBody, CardContainer, CardItem } from './components/ThreeDCard';
 import './App.css';
+
 const PROFILE = {
   name: 'Shreyas Mene',
   title: 'Full Stack Developer & AI/ML Enthusiast',
@@ -120,7 +122,7 @@ function App() {
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   useEffect(() => {
-    const bootTimer = setTimeout(() => setIsBooting(false), 2500);
+    const bootTimer = setTimeout(() => setIsBooting(false), 3600);
     return () => clearTimeout(bootTimer);
   }, []);
 
@@ -135,6 +137,9 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="background-layer">
+        <DotShaderBackground />
+      </div>
       <div className="noise-overlay" />
       <div className="main-layout">
         <Sidebar
@@ -173,25 +178,6 @@ function App() {
             {activeSection === 'education' && <EducationSection profile={PROFILE} />}
             {activeSection === 'contact' && <ContactSection profile={PROFILE} />}
           </div>
-
-          {/* Full-page Webcam Pixel Grid Background */}
-          <div className={`pixel-grid-bg ${theme === 'light' ? 'pixel-grid-light' : ''}`}>
-            <WebcamPixelGrid
-              gridCols={64}
-              gridRows={48}
-              maxElevation={theme === 'dark' ? 10 : 4}
-              motionSensitivity={0.3}
-              elevationSmoothing={0.1}
-              colorMode="monochrome"
-              monochromeColor={theme === 'dark' ? '#1c1c22' : '#d0d7de'}
-              backgroundColor={theme === 'dark' ? '#141416' : '#ffffff'}
-              mirror={true}
-              gapRatio={0.08}
-              darken={theme === 'dark' ? 0.5 : 0.3}
-              borderColor={theme === 'dark' ? '#ffffff' : '#d0d7de'}
-              borderOpacity={theme === 'dark' ? 0.03 : 0.015}
-            />
-          </div>
         </main>
       </div>
 
@@ -209,12 +195,7 @@ function App() {
 function HomeSection({ profile, onNavigate }) {
   return (
     <div className="section home-section">
-      {/* Floating Orbs Background */}
-      <div className="floating-orbs">
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
-      </div>
+      {/* Floating Orbs Removed in favor of BubbleBackground */}
 
       {/* Clean Hero Layout */}
       <div className="hero-container">
@@ -240,9 +221,24 @@ function HomeSection({ profile, onNavigate }) {
         <div className="hero-content-section">
           <div className="hero-intro">
             <span className="intro-label text-muted">Hello, I'm</span>
-            <FlipTextReveal word={profile.name} />
+            <h1 className="hero-name-clean">
+              <span
+                className="hero-name-typing"
+                style={{
+                  '--typing-width': `${profile.name.toUpperCase().length}ch`,
+                  '--typing-steps': String(profile.name.toUpperCase().length),
+                }}
+              >
+                {profile.name.toUpperCase()}
+              </span>
+              <span className="hero-name-cursor" aria-hidden="true"></span>
+            </h1>
             <h2 className="hero-role">
-              <span className="role-bracket text-cyan">&lt;</span><span className="role-text">{profile.title}</span><span className="role-bracket text-cyan">/&gt;</span>
+              <span className="role-bracket text-cyan">&lt;</span>
+              <span className="role-text text-purple font-bold tracking-wide">
+                {profile.title}
+              </span>
+              <span className="role-bracket text-cyan">/&gt;</span>
             </h2>
           </div>
 
@@ -273,6 +269,7 @@ function HomeSection({ profile, onNavigate }) {
             >
               <i className="ri-download-2-line"></i>
               <span>Download CV</span>
+              <span className="btn-glow"></span>
             </a>
             <button
               className="action-btn-secondary"
@@ -280,6 +277,7 @@ function HomeSection({ profile, onNavigate }) {
             >
               <i className="ri-mail-line"></i>
               <span>Contact Me</span>
+              <span className="btn-glow"></span>
             </button>
           </div>
 
@@ -298,61 +296,65 @@ function HomeSection({ profile, onNavigate }) {
       </div>
 
       {/* Stats Bar */}
-      <div className="stats-bar">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <div className="stat-item-home">
-          <span className="stat-number text-green">{profile.education.cgpa}</span>
-          <span className="stat-label-home">CGPA</span>
+      <CardTilt3D>
+        <div className="stats-bar">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="stat-item-home">
+            <span className="stat-number text-green">{profile.education.cgpa}</span>
+            <span className="stat-label-home">CGPA</span>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item-home">
+            <span className="stat-number text-cyan">{profile.projects.length}+</span>
+            <span className="stat-label-home">Projects</span>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item-home">
+            <span className="stat-number text-purple">{profile.certifications.length}</span>
+            <span className="stat-label-home">Certifications</span>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item-home">
+            <span className="stat-number text-yellow">1</span>
+            <span className="stat-label-home">Internship</span>
+          </div>
         </div>
-        <div className="stat-divider"></div>
-        <div className="stat-item-home">
-          <span className="stat-number text-cyan">{profile.projects.length}+</span>
-          <span className="stat-label-home">Projects</span>
-        </div>
-        <div className="stat-divider"></div>
-        <div className="stat-item-home">
-          <span className="stat-number text-purple">{profile.certifications.length}</span>
-          <span className="stat-label-home">Certifications</span>
-        </div>
-        <div className="stat-divider"></div>
-        <div className="stat-item-home">
-          <span className="stat-number text-yellow">1</span>
-          <span className="stat-label-home">Internship</span>
-        </div>
-      </div>
+      </CardTilt3D>
 
       {/* About Me Section */}
-      <div className="home-about">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <div className="about-header-home">
-          <span className="about-line"></span>
-          <h3 className="about-title-home">
-            <i className="ri-user-3-line text-cyan"></i>
-            About Me
-          </h3>
-          <span className="about-line"></span>
-        </div>
+      <CardTilt3D>
+        <div className="home-about">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="about-header-home">
+            <span className="about-line"></span>
+            <h3 className="about-title-home">
+              <i className="ri-user-3-line text-cyan"></i>
+              About Me
+            </h3>
+            <span className="about-line"></span>
+          </div>
 
-        <div className="about-content-home">
-          <p className="about-text">
-            I'm a second-year <span className="text-cyan">B.Tech CSE</span> student at
-            <span className="text-yellow"> VIT Bhopal University</span>, specializing in
-            <span className="text-purple"> AI & Machine Learning</span>. As a former
-            <span className="text-green"> MERN Stack Intern at IIT Ropar</span>, I blend
-            full-stack development with data science expertise to build intelligent,
-            scalable applications.
-          </p>
-        </div>
+          <div className="about-content-home">
+            <p className="about-text">
+              I'm a second-year <span className="text-cyan">B.Tech CSE</span> student at
+              <span className="text-yellow"> VIT Bhopal University</span>, specializing in
+              <span className="text-purple"> AI & Machine Learning</span>. As a former
+              <span className="text-green"> MERN Stack Intern at IIT Ropar</span>, I blend
+              full-stack development with data science expertise to build intelligent,
+              scalable applications.
+            </p>
+          </div>
 
-        <div className="interests-row">
-          {profile.interests.map((interest, i) => (
-            <div key={i} className="interest-chip">
-              <i className="ri-star-line text-yellow"></i>
-              <span>{interest}</span>
-            </div>
-          ))}
+          <div className="interests-row">
+            {profile.interests.map((interest, i) => (
+              <div key={i} className="interest-chip">
+                <i className="ri-star-line text-yellow"></i>
+                <span>{interest}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </CardTilt3D>
 
       {/* Quick Nav */}
       <div className="quick-nav-clean">
@@ -421,68 +423,74 @@ function AboutSection({ profile }) {
       </div>
 
       <div className="about-grid">
-        <div className="panel info-panel">
-          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <PanelHeader title="whoami" />
-          <div className="panel-content">
-            <div className="info-row">
-              <span className="info-label text-green">name</span>
-              <span className="info-separator">:</span>
-              <span className="info-value">{profile.name}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-label text-green">role</span>
-              <span className="info-separator">:</span>
-              <span className="info-value text-cyan">{profile.title}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-label text-green">location</span>
-              <span className="info-separator">:</span>
-              <span className="info-value">{profile.contact.location}</span>
-            </div>
-            <div className="info-row">
-              <span className="info-label text-green">status</span>
-              <span className="info-separator">:</span>
-              <span className="info-value text-yellow">● Available</span>
+        <CardTilt3D>
+          <div className="panel info-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+            <PanelHeader title="whoami" />
+            <div className="panel-content">
+              <div className="info-row">
+                <span className="info-label text-green">name</span>
+                <span className="info-separator">:</span>
+                <span className="info-value">{profile.name}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label text-green">role</span>
+                <span className="info-separator">:</span>
+                <span className="info-value text-cyan">{profile.title}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label text-green">location</span>
+                <span className="info-separator">:</span>
+                <span className="info-value">{profile.contact.location}</span>
+              </div>
+              <div className="info-row">
+                <span className="info-label text-green">status</span>
+                <span className="info-separator">:</span>
+                <span className="info-value text-yellow">● Available</span>
+              </div>
             </div>
           </div>
-        </div>
+        </CardTilt3D>
 
-        <div className="panel bio-panel">
-          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <PanelHeader title="cat bio.txt" />
-          <div className="panel-content">
-            <p className="bio-text">
-              I'm a second-year B.Tech Computer Science and Engineering student at
-              <span className="text-cyan"> VIT Bhopal University</span>, specializing in
-              <span className="text-purple"> Artificial Intelligence and Machine Learning</span>.
-            </p>
-            <p className="bio-text">
-              Former <span className="text-yellow">MERN Stack Developer Intern</span> at
-              <span className="text-green"> IIT Ropar</span>, now channeling that experience into
-              <span className="text-cyan"> Data Science</span>, <span className="text-yellow">MERN Stack</span>,
-              and sharpening my <span className="text-purple">DSA skills in Java</span>.
-            </p>
-            <p className="bio-text">
-              Always exploring, always building from hackathons to side projects that push my limits.
-            </p>
-          </div>
-        </div>
-
-        <div className="panel interests-panel">
-          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <PanelHeader title="interests.json" />
-          <div className="panel-content">
-            <div className="interests-list">
-              {profile.interests.map((interest, i) => (
-                <div key={i} className="interest-item">
-                  <span className="text-purple">▸</span>
-                  <span>{interest}</span>
-                </div>
-              ))}
+        <CardTilt3D>
+          <div className="panel bio-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+            <PanelHeader title="cat bio.txt" />
+            <div className="panel-content">
+              <p className="bio-text">
+                I'm a second-year B.Tech Computer Science and Engineering student at
+                <span className="text-cyan"> VIT Bhopal University</span>, specializing in
+                <span className="text-purple"> Artificial Intelligence and Machine Learning</span>.
+              </p>
+              <p className="bio-text">
+                Former <span className="text-yellow">MERN Stack Developer Intern</span> at
+                <span className="text-green"> IIT Ropar</span>, now channeling that experience into
+                <span className="text-cyan"> Data Science</span>, <span className="text-yellow">MERN Stack</span>,
+                and sharpening my <span className="text-purple">DSA skills in Java</span>.
+              </p>
+              <p className="bio-text">
+                Always exploring, always building from hackathons to side projects that push my limits.
+              </p>
             </div>
           </div>
-        </div>
+        </CardTilt3D>
+
+        <CardTilt3D>
+          <div className="panel interests-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+            <PanelHeader title="interests.json" />
+            <div className="panel-content">
+              <div className="interests-list">
+                {profile.interests.map((interest, i) => (
+                  <div key={i} className="interest-item">
+                    <span className="text-purple">▸</span>
+                    <span>{interest}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </CardTilt3D>
       </div>
     </div>
   );
@@ -505,56 +513,60 @@ function SkillsSection({ profile }) {
 
       <div className="skills-grid">
         {skillCategories.map(({ key, icon, title, color }) => (
-          <div key={key} className="panel skill-panel">
-            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-            <PanelHeader title={title} icon={icon} />
-            <div className="panel-content">
-              <div className="skill-bars">
-                {profile.skills[key].map((skill, i) => (
-                  <div key={skill} className="skill-item">
-                    <div className="skill-name">
-                      <span className={`text-${color}`}>▸</span>
-                      <span>{skill}</span>
+          <CardTilt3D key={key}>
+            <div className="panel skill-panel">
+              <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <PanelHeader title={title} icon={icon} />
+              <div className="panel-content">
+                <div className="skill-bars">
+                  {profile.skills[key].map((skill, i) => (
+                    <div key={skill} className="skill-item">
+                      <div className="skill-name">
+                        <span className={`text-${color}`}>▸</span>
+                        <span>{skill}</span>
+                      </div>
+                      <div className="skill-bar">
+                        <div
+                          className={`skill-fill ${color}`}
+                          style={{
+                            width: `${85 - i * 5}%`,
+                            animationDelay: `${i * 0.1}s`
+                          }}
+                        ></div>
+                      </div>
                     </div>
-                    <div className="skill-bar">
-                      <div
-                        className={`skill-fill ${color}`}
-                        style={{
-                          width: `${85 - i * 5}%`,
-                          animationDelay: `${i * 0.1}s`
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </CardTilt3D>
         ))}
       </div>
 
-      <div className="skills-summary panel">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <PanelHeader title="stats --summary" />
-        <div className="panel-content stats-grid">
-          <div className="stat-item">
-            <span className="stat-value text-green glow-green">{Object.values(profile.skills).flat().length}+</span>
-            <span className="stat-label">Technologies</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value text-cyan glow-cyan">{profile.projects.length}</span>
-            <span className="stat-label">Projects</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value text-yellow">{profile.education.cgpa}</span>
-            <span className="stat-label">CGPA</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value text-purple glow-purple">∞</span>
-            <span className="stat-label">Curiosity</span>
+      <CardTilt3D>
+        <div className="skills-summary panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <PanelHeader title="stats --summary" />
+          <div className="panel-content stats-grid">
+            <div className="stat-item">
+              <span className="stat-value text-green glow-green">{Object.values(profile.skills).flat().length}+</span>
+              <span className="stat-label">Technologies</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value text-cyan glow-cyan">{profile.projects.length}</span>
+              <span className="stat-label">Projects</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value text-yellow">{profile.education.cgpa}</span>
+              <span className="stat-label">CGPA</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value text-purple glow-purple">∞</span>
+              <span className="stat-label">Curiosity</span>
+            </div>
           </div>
         </div>
-      </div>
+      </CardTilt3D>
     </div>
   );
 }
@@ -569,43 +581,51 @@ function ProjectsSection({ profile }) {
 
       <div className="projects-grid">
         {profile.projects.map((project, index) => (
-          <div key={index} className="panel project-panel">
-            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-            <div className="project-header">
-              <span className="project-icon"><i className={project.icon}></i></span>
-              <span className="project-name text-green glow-green">{project.name}</span>
-            </div>
-            <div className="panel-content">
-              <p className="project-description">{project.description}</p>
-              <div className="tech-stack">
-                <span className="text-muted">tech_stack: [</span>
-                <div className="tech-tags">
-                  {project.tech.map((tech, i) => (
-                    <span key={tech} className="tech-tag">
-                      "{tech}"{i < project.tech.length - 1 ? ',' : ''}
-                    </span>
-                  ))}
-                </div>
-                <span className="text-muted">]</span>
+          <CardContainer key={index}>
+            <CardBody className="panel project-panel">
+              <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <CardItem translateZ={35} className="project-header">
+                <CardItem as="span" translateZ={60} className="project-icon">
+                  <i className={project.icon}></i>
+                </CardItem>
+                <CardItem as="span" translateZ={50} className="project-name text-green glow-green">
+                  {project.name}
+                </CardItem>
+              </CardItem>
+              <div className="panel-content">
+                <CardItem as="p" translateZ={28} className="project-description">
+                  {project.description}
+                </CardItem>
+                <CardItem translateZ={22} className="tech-stack">
+                  <span className="text-muted">tech_stack: [</span>
+                  <div className="tech-tags">
+                    {project.tech.map((tech, i) => (
+                      <span key={tech} className="tech-tag">
+                        "{tech}"{i < project.tech.length - 1 ? ',' : ''}
+                      </span>
+                    ))}
+                  </div>
+                  <span className="text-muted">]</span>
+                </CardItem>
               </div>
-            </div>
-            <div className="project-actions">
-              {project.liveUrl && (
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-                  <span className="text-cyan">[</span>
-                  <span className="text-yellow"><i className="ri-external-link-line"></i> live</span>
-                  <span className="text-cyan">]</span>
-                </a>
-              )}
-              {project.sourceUrl && (
-                <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-                  <span className="text-cyan">[</span>
-                  <span className="text-yellow"><i className="ri-github-line"></i> source</span>
-                  <span className="text-cyan">]</span>
-                </a>
-              )}
-            </div>
-          </div>
+              <CardItem translateZ={38} className="project-actions">
+                {project.liveUrl && (
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
+                    <span className="text-cyan">[</span>
+                    <span className="text-yellow"><i className="ri-external-link-line"></i> live</span>
+                    <span className="text-cyan">]</span>
+                  </a>
+                )}
+                {project.sourceUrl && (
+                  <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
+                    <span className="text-cyan">[</span>
+                    <span className="text-yellow"><i className="ri-github-line"></i> source</span>
+                    <span className="text-cyan">]</span>
+                  </a>
+                )}
+              </CardItem>
+            </CardBody>
+          </CardContainer>
         ))}
       </div>
     </div>
@@ -626,43 +646,47 @@ function ExperienceSection({ profile }) {
             <span className="marker-dot"></span>
             <span className="marker-line"></span>
           </div>
-          <div className="panel experience-panel">
-            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-            <div className="exp-header">
-              <div className="exp-title-row">
-                <span className="exp-role text-yellow glow-yellow">{profile.experience.role}</span>
-                <span className="exp-duration text-muted">{profile.experience.duration}</span>
+          <CardTilt3D>
+            <div className="panel experience-panel">
+              <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+              <div className="exp-header">
+                <div className="exp-title-row">
+                  <span className="exp-role text-yellow glow-yellow">{profile.experience.role}</span>
+                  <span className="exp-duration text-muted">{profile.experience.duration}</span>
+                </div>
+                <div className="exp-company">
+                  <span className="text-cyan">@ {profile.experience.company}</span>
+                </div>
               </div>
-              <div className="exp-company">
-                <span className="text-cyan">@ {profile.experience.company}</span>
+              <div className="panel-content">
+                <p className="exp-description">{profile.experience.description}</p>
+                <div className="exp-highlights">
+                  <span className="text-muted">// highlights</span>
+                  {profile.experience.highlights.map((highlight, i) => (
+                    <div key={i} className="highlight-item">
+                      <span className="text-green">▸</span>
+                      <span>{highlight}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="panel-content">
-              <p className="exp-description">{profile.experience.description}</p>
-              <div className="exp-highlights">
-                <span className="text-muted">// highlights</span>
-                {profile.experience.highlights.map((highlight, i) => (
-                  <div key={i} className="highlight-item">
-                    <span className="text-green">▸</span>
-                    <span>{highlight}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          </CardTilt3D>
         </div>
       </div>
 
-      <div className="panel future-panel">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <PanelHeader title="what's next?" />
-        <div className="panel-content">
-          <p className="text-muted">
-            Actively seeking opportunities to grow as a developer and contribute to
-            innovative projects. Open to internships, collaborations, and exciting challenges!
-          </p>
+      <CardTilt3D>
+        <div className="panel future-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <PanelHeader title="what's next?" />
+          <div className="panel-content">
+            <p className="text-muted">
+              Actively seeking opportunities to grow as a developer and contribute to
+              innovative projects. Open to internships, collaborations, and exciting challenges!
+            </p>
+          </div>
         </div>
-      </div>
+      </CardTilt3D>
     </div>
   );
 }
@@ -676,91 +700,100 @@ function EducationSection({ profile }) {
       <SectionHeader icon="ri-graduation-cap-line" title="Education" />
 
       {/* University */}
-      <div className="panel education-panel">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <div className="edu-header">
-          <div className="edu-icon"><i className="ri-building-2-line"></i></div>
-          <div className="edu-info">
-            <h3 className="edu-university text-cyan glow-cyan">{profile.education.university}</h3>
-            <p className="edu-degree text-green">{profile.education.degree}</p>
-            <p className="edu-spec text-purple">Specialization: {profile.education.specialization}</p>
-          </div>
-        </div>
-        <div className="panel-content">
-          <div className="edu-stats">
-            <div className="edu-stat">
-              <span className="stat-label">Year</span>
-              <span className="stat-value text-yellow">{profile.education.year}</span>
-            </div>
-            <div className="edu-stat">
-              <span className="stat-label">CGPA</span>
-              <span className="stat-value text-green glow-green">{profile.education.cgpa}</span>
-            </div>
-            <div className="edu-stat">
-              <span className="stat-label">Status</span>
-              <span className="stat-value text-cyan">● Active</span>
+      <CardTilt3D>
+        <div className="panel education-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="edu-header">
+            <div className="edu-icon"><i className="ri-building-2-line"></i></div>
+            <div className="edu-info">
+              <h3 className="edu-university text-cyan glow-cyan">{profile.education.university}</h3>
+              <p className="edu-degree text-green">{profile.education.degree}</p>
+              <p className="edu-spec text-purple">Specialization: {profile.education.specialization}</p>
             </div>
           </div>
+          <div className="panel-content">
+            <div className="edu-stats">
+              <div className="edu-stat">
+                <span className="stat-label">Year</span>
+                <span className="stat-value text-yellow">{profile.education.year}</span>
+              </div>
+              <div className="edu-stat">
+                <span className="stat-label">CGPA</span>
+                <span className="stat-value text-green glow-green">{profile.education.cgpa}</span>
+              </div>
+              <div className="edu-stat">
+                <span className="stat-label">Status</span>
+                <span className="stat-value text-cyan">● Active</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </CardTilt3D>
 
       {/* Schooling */}
-      <div className="panel education-panel">
-        <div className="edu-header">
-          <div className="edu-icon"><i className="ri-school-line"></i></div>
-          <div className="edu-info">
-            <h3 className="edu-university text-cyan glow-cyan">{profile.schooling.school}</h3>
-            <p className="edu-degree text-green">{profile.schooling.degree}</p>
-            <p className="edu-spec text-muted">{profile.schooling.location} • {profile.schooling.duration}</p>
-          </div>
-        </div>
-        <div className="panel-content">
-          <div className="edu-stats">
-            <div className="edu-stat">
-              <span className="stat-label">Class 12</span>
-              <span className="stat-value text-green glow-green">{profile.schooling.class12}</span>
-            </div>
-            <div className="edu-stat">
-              <span className="stat-label">Class 10</span>
-              <span className="stat-value text-green glow-green">{profile.schooling.class10}</span>
+      <CardTilt3D>
+        <div className="panel education-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <div className="edu-header">
+            <div className="edu-icon"><i className="ri-school-line"></i></div>
+            <div className="edu-info">
+              <h3 className="edu-university text-cyan glow-cyan">{profile.schooling.school}</h3>
+              <p className="edu-degree text-green">{profile.schooling.degree}</p>
+              <p className="edu-spec text-muted">{profile.schooling.location} • {profile.schooling.duration}</p>
             </div>
           </div>
+          <div className="panel-content">
+            <div className="edu-stats">
+              <div className="edu-stat">
+                <span className="stat-label">Class 12</span>
+                <span className="stat-value text-green glow-green">{profile.schooling.class12}</span>
+              </div>
+              <div className="edu-stat">
+                <span className="stat-label">Class 10</span>
+                <span className="stat-value text-green glow-green">{profile.schooling.class10}</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </CardTilt3D>
 
       {/* Certifications */}
-      <div className="panel certifications-panel">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <PanelHeader title="certifications" icon="ri-award-line" />
-        <div className="panel-content">
-          <div className="cert-list">
-            {profile.certifications.map((cert, i) => (
-              <div key={i} className="cert-item">
-                <span className="text-green">▸</span>
-                <span className="cert-name">{cert.name}</span>
-                <span className="text-muted"> — </span>
-                <span className="text-cyan">{cert.provider}</span>
-                {cert.badge && <span className="cert-badge text-yellow"> ({cert.badge})</span>}
-              </div>
-            ))}
+      <CardTilt3D>
+        <div className="panel certifications-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <PanelHeader title="certifications" icon="ri-award-line" />
+          <div className="panel-content">
+            <div className="cert-list">
+              {profile.certifications.map((cert, i) => (
+                <div key={i} className="cert-item">
+                  <span className="text-green">▸</span>
+                  <span className="cert-name">{cert.name}</span>
+                  <span className="text-muted"> — </span>
+                  <span className="text-cyan">{cert.provider}</span>
+                  {cert.badge && <span className="cert-badge text-yellow"> ({cert.badge})</span>}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </CardTilt3D>
 
-      <div className="panel coursework-panel">
-        <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-        <PanelHeader title="relevant coursework" />
-        <div className="panel-content">
-          <div className="course-grid">
-            {['Data Structures', 'Algorithms', 'Machine Learning', 'Web Development', 'Database Systems', 'AI Fundamentals'].map((course, i) => (
-              <div key={i} className="course-item">
-                <span className="text-purple">◆</span>
-                <span>{course}</span>
-              </div>
-            ))}
+      <CardTilt3D>
+        <div className="panel coursework-panel">
+          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+          <PanelHeader title="relevant coursework" />
+          <div className="panel-content">
+            <div className="course-grid">
+              {['Data Structures', 'Algorithms', 'Machine Learning', 'Web Development', 'Database Systems', 'AI Fundamentals'].map((course, i) => (
+                <div key={i} className="course-item">
+                  <span className="text-purple">◆</span>
+                  <span>{course}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </CardTilt3D>
     </div>
   );
 }
@@ -782,51 +815,55 @@ function ContactSection({ profile }) {
       <SectionHeader icon="ri-mail-send-line" title="Contact" />
 
       <div className="contact-content">
-        <div className="panel contact-panel">
-          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <PanelHeader title="cat contact.json" />
-          <div className="panel-content contact-json">
-            <span className="text-purple">{'{'}</span>
-            {contactLinks.map((link, i) => (
-              <div key={i} className="json-row">
-                <span className="json-key text-cyan">"{link.label.toLowerCase()}"</span>
-                <span className="text-muted">: </span>
-                {link.href ? (
-                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="json-value text-yellow">
-                    "{link.value}"
-                  </a>
-                ) : (
-                  <span className="json-value text-yellow">"{link.value}"</span>
-                )}
-                {i < contactLinks.length - 1 && <span className="text-muted">,</span>}
-              </div>
-            ))}
-            <span className="text-purple">{'}'}</span>
-          </div>
-        </div>
-
-        <div className="panel message-panel">
-          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <PanelHeader title="send_message()" />
-          <div className="panel-content">
-            <p className="text-muted">
-              Feel free to reach out! I'm always open to discussing new projects,
-              creative ideas, or opportunities to be part of something amazing.
-            </p>
-            <div className="cta-buttons">
-              <a href={`mailto:${profile.contact.email}`} className="cta-btn primary">
-                <span className="text-green">[</span>
-                <span><i className="ri-mail-line"></i> Send Email</span>
-                <span className="text-green">]</span>
-              </a>
-              <a href={`https://${profile.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="cta-btn">
-                <span className="text-cyan">[</span>
-                <span><i className="ri-linkedin-box-line"></i> LinkedIn</span>
-                <span className="text-cyan">]</span>
-              </a>
+        <CardTilt3D>
+          <div className="panel contact-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+            <PanelHeader title="cat contact.json" />
+            <div className="panel-content contact-json">
+              <span className="text-purple">{'{'}</span>
+              {contactLinks.map((link, i) => (
+                <div key={i} className="json-row">
+                  <span className="json-key text-cyan">"{link.label.toLowerCase()}"</span>
+                  <span className="text-muted">: </span>
+                  {link.href ? (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="json-value text-yellow">
+                      "{link.value}"
+                    </a>
+                  ) : (
+                    <span className="json-value text-yellow">"{link.value}"</span>
+                  )}
+                  {i < contactLinks.length - 1 && <span className="text-muted">,</span>}
+                </div>
+              ))}
+              <span className="text-purple">{'}'}</span>
             </div>
           </div>
-        </div>
+        </CardTilt3D>
+
+        <CardTilt3D>
+          <div className="panel message-panel">
+            <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+            <PanelHeader title="send_message()" />
+            <div className="panel-content">
+              <p className="text-muted">
+                Feel free to reach out! I'm always open to discussing new projects,
+                creative ideas, or opportunities to be part of something amazing.
+              </p>
+              <div className="cta-buttons">
+                <a href={`mailto:${profile.contact.email}`} className="cta-btn primary">
+                  <span className="text-green">[</span>
+                  <span><i className="ri-mail-line"></i> Send Email</span>
+                  <span className="text-green">]</span>
+                </a>
+                <a href={`https://${profile.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="cta-btn">
+                  <span className="text-cyan">[</span>
+                  <span><i className="ri-linkedin-box-line"></i> LinkedIn</span>
+                  <span className="text-cyan">]</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </CardTilt3D>
       </div>
     </div>
   );
@@ -879,29 +916,40 @@ function BootScreen() {
   ];
 
   useEffect(() => {
-    const timers = bootSequence.map(({ text, delay }) =>
+    setBootLines([]);
+    const timeouts = bootSequence.map(({ text, delay }) =>
       setTimeout(() => {
         setBootLines(prev => [...prev, text]);
       }, delay)
     );
-    return () => timers.forEach(t => clearTimeout(t));
+
+    return () => {
+      timeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    };
   }, []);
 
   return (
     <div className="boot-screen">
       <div className="boot-content">
         {bootLines.map((line, index) => {
-          const isTitle = line.includes('█▓');
-          const isSuccess = line.includes('✓');
-          const isEmpty = line === '';
-
-          let className = 'boot-line-shimmer';
-          if (isTitle) className = 'boot-line text-cyan glow-cyan';
-          else if (isSuccess) className = 'boot-line text-green';
-          else if (isEmpty) className = 'boot-line';
+          const hasText = line.trim().length > 0;
+          const steps = Math.max(6, line.length);
+          const duration = Math.min(2.2, Math.max(0.4, line.length * 0.035));
 
           return (
-            <div key={index} className={className}>
+            <div
+              key={index}
+              className={`boot-line ${hasText ? 'typing' : ''} ${line.includes('✓') ? 'text-green' : ''} ${line.includes('█▓') ? 'text-cyan glow-cyan' : ''}`}
+              style={
+                hasText
+                  ? {
+                      '--typing-steps': String(steps),
+                      '--typing-duration': `${duration}s`,
+                      '--typing-width': `${line.length}ch`,
+                    }
+                  : undefined
+              }
+            >
               {line}
             </div>
           );

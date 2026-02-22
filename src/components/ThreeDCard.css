@@ -1,0 +1,54 @@
+/* ═══ Aceternity-style 3D Card Effect ═══ */
+.card-3d-container {
+  perspective: 1200px;
+}
+
+.card-3d-tilt {
+  transform: rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+
+.card-3d-body {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.card-3d-item {
+  --card-translate-x: 0px;
+  --card-translate-y: 0px;
+  --card-translate-z: 0px;
+  --card-rotate-x: 0deg;
+  --card-rotate-y: 0deg;
+  --card-rotate-z: 0deg;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
+.card-3d-container[data-card-hover="true"] .card-3d-item {
+  transform: translate3d(
+      var(--card-translate-x),
+      var(--card-translate-y),
+      var(--card-translate-z)
+    )
+    rotateX(var(--card-rotate-x))
+    rotateY(var(--card-rotate-y))
+    rotateZ(var(--card-rotate-z));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-3d-tilt,
+  .card-3d-item {
+    transition: none;
+  }
+}
+
+@media (hover: none) {
+  .card-3d-tilt,
+  .card-3d-item {
+    transform: none !important;
+  }
+}

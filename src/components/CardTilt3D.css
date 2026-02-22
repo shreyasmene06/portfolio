@@ -1,0 +1,15 @@
+/* ═══ 3D Card Tilt Effect ═══ */
+.card-tilt-container {
+    perspective: 800px;
+}
+
+.card-tilt-body {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+}
+
+.card-tilt-body>* {
+    /* Let children inherit the 3D context */
+    transform-style: preserve-3d;
+}
