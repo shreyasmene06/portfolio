@@ -392,6 +392,31 @@
   }
 }
 
+@media (max-width: 480px) {
+  .terminal {
+    font-size: 0.75rem;
+    padding: 10px;
+  }
+
+  .ascii-art {
+    font-size: 0.35rem;
+  }
+
+  .command-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .neofetch-container {
+    gap: 12px;
+  }
+
+  .social-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════ */
 /* LIGHT THEME OVERRIDES – Terminal                               */
 /* ═══════════════════════════════════════════════════════════════ */

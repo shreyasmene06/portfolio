@@ -41,6 +41,8 @@ function Sidebar({ activeSection, onSectionChange, profile }) {
               key={item.id}
               className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
               onClick={() => onSectionChange(item.id)}
+              aria-label={item.label}
+              title={item.label}
             >
               <span className="nav-indicator">{activeSection === item.id ? '▸' : ' '}</span>
               <span className={`nav-icon ${activeSection === item.id ? 'text-cyan' : 'text-muted'}`}><i className={item.icon}></i></span>

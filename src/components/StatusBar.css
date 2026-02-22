@@ -73,6 +73,23 @@
   }
 }
 
+@media (max-width: 480px) {
+  .status-bar {
+    padding: 0 10px;
+    font-size: 0.7rem;
+  }
+
+  .status-left,
+  .status-right {
+    gap: 6px;
+  }
+
+  .mode-indicator {
+    padding: 2px 6px;
+    font-size: 0.6rem;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════ */
 /* LIGHT THEME OVERRIDES – StatusBar                              */
 /* ═══════════════════════════════════════════════════════════════ */

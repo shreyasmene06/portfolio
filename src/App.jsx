@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
 import GlowingEffect from './components/GlowingEffect';
@@ -108,6 +108,11 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isBooting, setIsBooting] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(max-width: 768px)').matches;
+  });
+  const contentRef = useRef(null);
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('portfolio-theme');
     if (saved) return saved;
@@ -119,7 +124,32 @@ function App() {
     localStorage.setItem('portfolio-theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const handleChange = () => setIsMobile(mediaQuery.matches);
+    handleChange();
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
+
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+
+  const handleNavigate = (sectionId) => {
+    if (isMobile) {
+      const target = document.getElementById(`section-${sectionId}`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      setActiveSection(sectionId);
+      return;
+    }
+    setActiveSection(sectionId);
+  };
 
   useEffect(() => {
     const bootTimer = setTimeout(() => setIsBooting(false), 3600);
@@ -131,9 +161,42 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    if (!isMobile) return;
+    const container = contentRef.current;
+    if (!container) return;
+    const sections = Array.from(container.querySelectorAll('[data-section]'));
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-section');
+            if (id) setActiveSection(id);
+          }
+        });
+      },
+      { root: container, threshold: 0.2 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [isMobile]);
+
   if (isBooting) {
     return <BootScreen />;
   }
+
+  const sections = [
+    { id: 'home', element: <HomeSection profile={PROFILE} onNavigate={handleNavigate} /> },
+    { id: 'about', element: <AboutSection profile={PROFILE} /> },
+    { id: 'skills', element: <SkillsSection profile={PROFILE} /> },
+    { id: 'projects', element: <ProjectsSection profile={PROFILE} /> },
+    { id: 'experience', element: <ExperienceSection profile={PROFILE} /> },
+    { id: 'education', element: <EducationSection profile={PROFILE} /> },
+    { id: 'contact', element: <ContactSection profile={PROFILE} /> },
+  ];
 
   return (
     <div className="app-container">
@@ -144,7 +207,7 @@ function App() {
       <div className="main-layout">
         <Sidebar
           activeSection={activeSection}
-          onSectionChange={setActiveSection}
+          onSectionChange={handleNavigate}
           profile={PROFILE}
         />
 
@@ -169,14 +232,19 @@ function App() {
             </div>
           </div>
 
-          <div className="content-wrapper">
-            {activeSection === 'home' && <HomeSection profile={PROFILE} onNavigate={setActiveSection} />}
-            {activeSection === 'about' && <AboutSection profile={PROFILE} />}
-            {activeSection === 'skills' && <SkillsSection profile={PROFILE} />}
-            {activeSection === 'projects' && <ProjectsSection profile={PROFILE} />}
-            {activeSection === 'experience' && <ExperienceSection profile={PROFILE} />}
-            {activeSection === 'education' && <EducationSection profile={PROFILE} />}
-            {activeSection === 'contact' && <ContactSection profile={PROFILE} />}
+          <div className="content-wrapper" ref={contentRef}>
+            {isMobile
+              ? sections.map((section) => (
+                  <section
+                    key={section.id}
+                    id={`section-${section.id}`}
+                    data-section={section.id}
+                    className="scroll-section"
+                  >
+                    {section.element}
+                  </section>
+                ))
+              : sections.find((section) => section.id === activeSection)?.element}
           </div>
         </main>
       </div>

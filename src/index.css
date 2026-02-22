@@ -87,6 +87,7 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -96,6 +97,14 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.5;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Scrollbar styling */
@@ -315,6 +324,34 @@ body {
 
 [data-theme="light"] .noise-overlay {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    background-size: 32px 32px;
+  }
+
+  [data-theme="light"] .content-wrapper {
+    background-size: 32px 32px;
+  }
+
+  .noise-overlay {
+    opacity: 0.025;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-wrapper {
+    background-size: 28px 28px;
+  }
+
+  [data-theme="light"] .content-wrapper {
+    background-size: 28px 28px;
+  }
+
+  .noise-overlay {
+    opacity: 0.02;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════ */
