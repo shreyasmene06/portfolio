@@ -39,8 +39,8 @@
   align-items: center;
   gap: 6px;
   padding: 2px 10px;
-  background: rgba(45, 212, 140, 0.08);
-  border: 1px solid rgba(45, 212, 140, 0.2);
+  background: rgba(232, 197, 71, 0.06);
+  border: 1px solid rgba(232, 197, 71, 0.15);
   border-radius: 4px;
   font-weight: 500;
   font-size: 0.65rem;
@@ -73,36 +73,19 @@
   }
 }
 
-@media (max-width: 480px) {
-  .status-bar {
-    padding: 0 10px;
-    font-size: 0.7rem;
-  }
-
-  .status-left,
-  .status-right {
-    gap: 6px;
-  }
-
-  .mode-indicator {
-    padding: 2px 6px;
-    font-size: 0.6rem;
-  }
-}
-
 /* ═══════════════════════════════════════════════════════════════ */
 /* LIGHT THEME OVERRIDES – StatusBar                              */
 /* ═══════════════════════════════════════════════════════════════ */
 
 /* Mode indicator – subtle in light mode */
 [data-theme="light"] .status-bar {
-  background: rgba(246, 248, 250, 0.8);
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  background: rgba(240, 237, 232, 0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border-top: 1px solid var(--border-color);
 }
 
 [data-theme="light"] .mode-indicator {
-  background: rgba(26, 127, 55, 0.06);
-  border-color: rgba(26, 127, 55, 0.2);
+  background: rgba(44, 37, 24, 0.04);
+  border-color: rgba(44, 37, 24, 0.12);
 }

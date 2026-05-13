@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import StatusBar from './components/StatusBar';
+import FlipTextReveal from './components/FlipTextReveal';
 import GlowingEffect from './components/GlowingEffect';
-import DotShaderBackground from './components/DotShaderBackground';
+import WebcamPixelGrid from './components/WebcamPixelGrid';
 import CardTilt3D from './components/CardTilt3D';
-import { CardBody, CardContainer, CardItem } from './components/ThreeDCard';
+import DotShaderBackground from './components/DotShaderBackground';
+import PeriodicTable from './components/PeriodicTable';
 import './App.css';
 
 const PROFILE = {
@@ -33,17 +35,31 @@ const PROFILE = {
     { name: 'Applied Machine Learning in Python', provider: 'University of Michigan', badge: null },
     { name: 'Python for Data Science, AI & Development', provider: 'IBM', badge: null }
   ],
-  experience: {
-    role: 'MERN Stack Developer Intern',
-    company: 'IIT Ropar',
-    duration: 'May 2025 – Dec 2025',
-    description: 'Built robust web applications with hands-on experience in full-stack development',
-    highlights: [
-      'Developed scalable web applications using MERN stack',
-      'Collaborated with research teams on innovative projects',
-      'Implemented best practices in code quality and testing'
-    ]
-  },
+  experience: [
+    {
+      role: 'Intern',
+      company: 'Vicharanashala Lab for Education Design',
+      duration: 'May 2026 – Present',
+      description: 'Worked on real-world open-source projects focused on India-centric problem statements',
+      highlights: [
+        'Contributed to live repositories with real-world impact',
+        'Collaborated with mentors and team members on active projects',
+        'Worked in a structured development environment',
+        'Followed industry workflows like Git, pull requests, and code reviews'
+      ]
+    },
+    {
+      role: 'MERN Stack Developer Intern',
+      company: 'IIT Ropar',
+      duration: 'May 2025 – Dec 2025',
+      description: 'Built robust web applications with hands-on experience in full-stack development',
+      highlights: [
+        'Developed scalable web applications using MERN stack',
+        'Collaborated with research teams on innovative projects',
+        'Implemented best practices in code quality and testing'
+      ]
+    }
+  ],
   skills: {
     frontend: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js', 'TypeScript'],
     backend: ['Express', 'Python', 'MongoDB', 'MySQL'],
@@ -84,12 +100,12 @@ const PROFILE = {
       sourceUrl: 'https://github.com/shreyasmene06/OmarchyMadeEasy'
     },
     {
-      name: 'URL Shortener',
-      tech: ['Node.js', 'Express.js', 'TypeScript', 'MongoDB', 'Mongoose'],
-      description: 'Scalable link management service with RESTful API, custom short URLs, analytics tracking, and type-safe backend architecture built for production deployment.',
-      icon: 'ri-link',
+      name: 'HazardX',
+      tech: ['Python', 'FastAPI', 'React (Vite)', 'scikit-learn', 'Pandas', 'NumPy'],
+      description: 'AI-powered risk analysis platform that predicts accident severity and surfaces critical safety signals in industrial environments. Combines machine learning with a high-performance FastAPI backend and React (Vite) frontend to enable real-time risk assessment and data-driven decision-making for improved workplace safety.',
+      icon: 'ri-shield-check-line',
       liveUrl: null,
-      sourceUrl: 'https://github.com/shreyasmene06/Url-shortner'
+      sourceUrl: null
     }
   ],
   contact: {
@@ -108,11 +124,6 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isBooting, setIsBooting] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(max-width: 768px)').matches;
-  });
-  const contentRef = useRef(null);
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('portfolio-theme');
     if (saved) return saved;
@@ -124,35 +135,10 @@ function App() {
     localStorage.setItem('portfolio-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    const handleChange = () => setIsMobile(mediaQuery.matches);
-    handleChange();
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange);
-      return () => mediaQuery.removeEventListener('change', handleChange);
-    }
-    mediaQuery.addListener(handleChange);
-    return () => mediaQuery.removeListener(handleChange);
-  }, []);
-
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
-  const handleNavigate = (sectionId) => {
-    if (isMobile) {
-      const target = document.getElementById(`section-${sectionId}`);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      setActiveSection(sectionId);
-      return;
-    }
-    setActiveSection(sectionId);
-  };
-
   useEffect(() => {
-    const bootTimer = setTimeout(() => setIsBooting(false), 3600);
+    const bootTimer = setTimeout(() => setIsBooting(false), 2500);
     return () => clearTimeout(bootTimer);
   }, []);
 
@@ -161,53 +147,47 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
+  // Keyboard shortcuts for navigation
   useEffect(() => {
-    if (!isMobile) return;
-    const container = contentRef.current;
-    if (!container) return;
-    const sections = Array.from(container.querySelectorAll('[data-section]'));
-    if (sections.length === 0) return;
+    const shortcutMap = {
+      h: 'home',
+      s: 'skills',
+      p: 'projects',
+      e: 'experience',
+      d: 'education',
+      c: 'contact',
+    };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('data-section');
-            if (id) setActiveSection(id);
-          }
-        });
-      },
-      { root: container, threshold: 0.2 }
-    );
+    const handleKeyDown = (e) => {
+      // Don't trigger when typing in inputs/textareas
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+      // Don't trigger with modifier keys
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, [isMobile]);
+      const section = shortcutMap[e.key.toLowerCase()];
+      if (section) {
+        setActiveSection(section);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   if (isBooting) {
     return <BootScreen />;
   }
 
-  const sections = [
-    { id: 'home', element: <HomeSection profile={PROFILE} onNavigate={handleNavigate} /> },
-    { id: 'about', element: <AboutSection profile={PROFILE} /> },
-    { id: 'skills', element: <SkillsSection profile={PROFILE} /> },
-    { id: 'projects', element: <ProjectsSection profile={PROFILE} /> },
-    { id: 'experience', element: <ExperienceSection profile={PROFILE} /> },
-    { id: 'education', element: <EducationSection profile={PROFILE} /> },
-    { id: 'contact', element: <ContactSection profile={PROFILE} /> },
-  ];
-
   return (
     <div className="app-container">
-      <div className="background-layer">
+      <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
         <DotShaderBackground />
       </div>
       <div className="noise-overlay" />
       <div className="main-layout">
         <Sidebar
           activeSection={activeSection}
-          onSectionChange={handleNavigate}
+          onSectionChange={setActiveSection}
           profile={PROFILE}
         />
 
@@ -220,8 +200,8 @@ function App() {
             </div>
             <div className="window-title">
               <span className="text-muted">shreyas@portfolio</span>
-              <span className="text-green">:</span>
-              <span className="text-cyan">~/{activeSection}</span>
+              <span className="text-muted">:</span>
+              <span className="text-secondary">~/{activeSection}</span>
               <span className="cursor-blink">█</span>
             </div>
             <div className="window-actions">
@@ -232,19 +212,14 @@ function App() {
             </div>
           </div>
 
-          <div className="content-wrapper" ref={contentRef}>
-            {isMobile
-              ? sections.map((section) => (
-                  <section
-                    key={section.id}
-                    id={`section-${section.id}`}
-                    data-section={section.id}
-                    className="scroll-section"
-                  >
-                    {section.element}
-                  </section>
-                ))
-              : sections.find((section) => section.id === activeSection)?.element}
+          <div className="content-wrapper">
+            {activeSection === 'home' && <HomeSection profile={PROFILE} onNavigate={setActiveSection} />}
+            {activeSection === 'about' && <AboutSection profile={PROFILE} />}
+            {activeSection === 'skills' && <SkillsSection profile={PROFILE} />}
+            {activeSection === 'projects' && <ProjectsSection profile={PROFILE} />}
+            {activeSection === 'experience' && <ExperienceSection profile={PROFILE} />}
+            {activeSection === 'education' && <EducationSection profile={PROFILE} />}
+            {activeSection === 'contact' && <ContactSection profile={PROFILE} />}
           </div>
         </main>
       </div>
@@ -290,23 +265,14 @@ function HomeSection({ profile, onNavigate }) {
           <div className="hero-intro">
             <span className="intro-label text-muted">Hello, I'm</span>
             <h1 className="hero-name-clean">
-              <span
-                className="hero-name-typing"
-                style={{
-                  '--typing-width': `${profile.name.toUpperCase().length}ch`,
-                  '--typing-steps': String(profile.name.toUpperCase().length),
-                }}
-              >
-                {profile.name.toUpperCase()}
-              </span>
-              <span className="hero-name-cursor" aria-hidden="true"></span>
+              <span className="name-text">{profile.name}</span>
             </h1>
             <h2 className="hero-role">
-              <span className="role-bracket text-cyan">&lt;</span>
-              <span className="role-text text-purple font-bold tracking-wide">
+              <span className="role-bracket text-muted">&lt;</span>
+              <span className="role-text text-secondary" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem' }}>
                 {profile.title}
               </span>
-              <span className="role-bracket text-cyan">/&gt;</span>
+              <span className="role-bracket text-muted">/&gt;</span>
             </h2>
           </div>
 
@@ -316,16 +282,16 @@ function HomeSection({ profile, onNavigate }) {
 
           <div className="hero-highlights">
             <div className="highlight-item">
-              <i className="ri-graduation-cap-line text-cyan"></i>
-              <span>B.Tech CSE @ <span className="text-yellow">VIT Bhopal</span></span>
+              <i className="ri-graduation-cap-line text-muted"></i>
+              <span>B.Tech CSE @ <span className="text-secondary">VIT Bhopal</span></span>
             </div>
             <div className="highlight-item">
-              <i className="ri-cpu-line text-purple"></i>
+              <i className="ri-cpu-line text-muted"></i>
               <span>AI & Machine Learning</span>
             </div>
             <div className="highlight-item">
-              <i className="ri-building-line text-green"></i>
-              <span>Ex-Intern @ <span className="text-yellow">IIT Ropar</span></span>
+              <i className="ri-building-line text-muted"></i>
+              <span>Ex-Intern @ <span className="text-secondary">IIT Ropar</span></span>
             </div>
           </div>
 
@@ -337,7 +303,6 @@ function HomeSection({ profile, onNavigate }) {
             >
               <i className="ri-download-2-line"></i>
               <span>Download CV</span>
-              <span className="btn-glow"></span>
             </a>
             <button
               className="action-btn-secondary"
@@ -345,7 +310,6 @@ function HomeSection({ profile, onNavigate }) {
             >
               <i className="ri-mail-line"></i>
               <span>Contact Me</span>
-              <span className="btn-glow"></span>
             </button>
           </div>
 
@@ -368,23 +332,23 @@ function HomeSection({ profile, onNavigate }) {
         <div className="stats-bar">
           <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
           <div className="stat-item-home">
-            <span className="stat-number text-green">{profile.education.cgpa}</span>
+            <span className="stat-number">{profile.education.cgpa}</span>
             <span className="stat-label-home">CGPA</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item-home">
-            <span className="stat-number text-cyan">{profile.projects.length}+</span>
+            <span className="stat-number">{profile.projects.length}+</span>
             <span className="stat-label-home">Projects</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item-home">
-            <span className="stat-number text-purple">{profile.certifications.length}</span>
+            <span className="stat-number">{profile.certifications.length}</span>
             <span className="stat-label-home">Certifications</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item-home">
-            <span className="stat-number text-yellow">1</span>
-            <span className="stat-label-home">Internship</span>
+            <span className="stat-number">2</span>
+            <span className="stat-label-home">Internships</span>
           </div>
         </div>
       </CardTilt3D>
@@ -396,7 +360,7 @@ function HomeSection({ profile, onNavigate }) {
           <div className="about-header-home">
             <span className="about-line"></span>
             <h3 className="about-title-home">
-              <i className="ri-user-3-line text-cyan"></i>
+              <i className="ri-user-3-line text-muted"></i>
               About Me
             </h3>
             <span className="about-line"></span>
@@ -404,10 +368,10 @@ function HomeSection({ profile, onNavigate }) {
 
           <div className="about-content-home">
             <p className="about-text">
-              I'm a second-year <span className="text-cyan">B.Tech CSE</span> student at
-              <span className="text-yellow"> VIT Bhopal University</span>, specializing in
-              <span className="text-purple"> AI & Machine Learning</span>. As a former
-              <span className="text-green"> MERN Stack Intern at IIT Ropar</span>, I blend
+              I'm a second-year <span className="text-secondary">B.Tech CSE</span> student at
+              <span className="text-secondary"> VIT Bhopal University</span>, specializing in
+              <span className="text-secondary"> AI & Machine Learning</span>. As a former
+              <span className="text-secondary"> MERN Stack Intern at IIT Ropar</span>, I blend
               full-stack development with data science expertise to build intelligent,
               scalable applications.
             </p>
@@ -416,7 +380,7 @@ function HomeSection({ profile, onNavigate }) {
           <div className="interests-row">
             {profile.interests.map((interest, i) => (
               <div key={i} className="interest-chip">
-                <i className="ri-star-line text-yellow"></i>
+                <i className="ri-star-line text-muted"></i>
                 <span>{interest}</span>
               </div>
             ))}
@@ -474,7 +438,7 @@ function AboutSection({ profile }) {
             </div>
           </div>
           <div className="photo-label">
-            <span className="text-green">$</span> cat profile.jpg
+            <span className="text-muted">$</span> cat profile.jpg
           </div>
         </div>
         <div className="profile-actions">
@@ -497,24 +461,24 @@ function AboutSection({ profile }) {
             <PanelHeader title="whoami" />
             <div className="panel-content">
               <div className="info-row">
-                <span className="info-label text-green">name</span>
+                <span className="info-label text-muted">name</span>
                 <span className="info-separator">:</span>
                 <span className="info-value">{profile.name}</span>
               </div>
               <div className="info-row">
-                <span className="info-label text-green">role</span>
+                <span className="info-label text-muted">role</span>
                 <span className="info-separator">:</span>
-                <span className="info-value text-cyan">{profile.title}</span>
+                <span className="info-value text-secondary">{profile.title}</span>
               </div>
               <div className="info-row">
-                <span className="info-label text-green">location</span>
+                <span className="info-label text-muted">location</span>
                 <span className="info-separator">:</span>
                 <span className="info-value">{profile.contact.location}</span>
               </div>
               <div className="info-row">
-                <span className="info-label text-green">status</span>
+                <span className="info-label text-muted">status</span>
                 <span className="info-separator">:</span>
-                <span className="info-value text-yellow">● Available</span>
+                <span className="info-value text-secondary">● Available</span>
               </div>
             </div>
           </div>
@@ -527,17 +491,16 @@ function AboutSection({ profile }) {
             <div className="panel-content">
               <p className="bio-text">
                 I'm a second-year B.Tech Computer Science and Engineering student at
-                <span className="text-cyan"> VIT Bhopal University</span>, specializing in
-                <span className="text-purple"> Artificial Intelligence and Machine Learning</span>.
+                <span className="text-secondary"> VIT Bhopal University</span>, specializing in
+                <span className="text-secondary"> Artificial Intelligence and Machine Learning</span>.
               </p>
               <p className="bio-text">
-                Former <span className="text-yellow">MERN Stack Developer Intern</span> at
-                <span className="text-green"> IIT Ropar</span>, now channeling that experience into
-                <span className="text-cyan"> Data Science</span>, <span className="text-yellow">MERN Stack</span>,
-                and sharpening my <span className="text-purple">DSA skills in Java</span>.
+                Former <span className="text-secondary">MERN Stack Developer Intern</span> at
+                <span className="text-secondary"> IIT Ropar</span>, now channeling that experience into
+                Data Science, MERN Stack, and sharpening my DSA skills in Java.
               </p>
               <p className="bio-text">
-                Always exploring, always building from hackathons to side projects that push my limits.
+                Always exploring, always building — from hackathons to side projects that push my limits.
               </p>
             </div>
           </div>
@@ -551,7 +514,7 @@ function AboutSection({ profile }) {
               <div className="interests-list">
                 {profile.interests.map((interest, i) => (
                   <div key={i} className="interest-item">
-                    <span className="text-purple">▸</span>
+                    <span className="text-muted">▸</span>
                     <span>{interest}</span>
                   </div>
                 ))}
@@ -567,76 +530,8 @@ function AboutSection({ profile }) {
 // ═══════════════════════════════════════════════════════════════
 // SKILLS SECTION
 // ═══════════════════════════════════════════════════════════════
-function SkillsSection({ profile }) {
-  const skillCategories = [
-    { key: 'frontend', icon: 'ri-palette-line', title: 'Frontend', color: 'yellow' },
-    { key: 'backend', icon: 'ri-settings-3-line', title: 'Backend', color: 'green' },
-    { key: 'languages', icon: 'ri-code-line', title: 'Languages', color: 'cyan' },
-    { key: 'tools', icon: 'ri-tools-line', title: 'Tools', color: 'purple' }
-  ];
-
-  return (
-    <div className="section skills-section">
-      <SectionHeader icon="ri-tools-fill" title="Technical Skills" />
-
-      <div className="skills-grid">
-        {skillCategories.map(({ key, icon, title, color }) => (
-          <CardTilt3D key={key}>
-            <div className="panel skill-panel">
-              <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <PanelHeader title={title} icon={icon} />
-              <div className="panel-content">
-                <div className="skill-bars">
-                  {profile.skills[key].map((skill, i) => (
-                    <div key={skill} className="skill-item">
-                      <div className="skill-name">
-                        <span className={`text-${color}`}>▸</span>
-                        <span>{skill}</span>
-                      </div>
-                      <div className="skill-bar">
-                        <div
-                          className={`skill-fill ${color}`}
-                          style={{
-                            width: `${85 - i * 5}%`,
-                            animationDelay: `${i * 0.1}s`
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </CardTilt3D>
-        ))}
-      </div>
-
-      <CardTilt3D>
-        <div className="skills-summary panel">
-          <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <PanelHeader title="stats --summary" />
-          <div className="panel-content stats-grid">
-            <div className="stat-item">
-              <span className="stat-value text-green glow-green">{Object.values(profile.skills).flat().length}+</span>
-              <span className="stat-label">Technologies</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-value text-cyan glow-cyan">{profile.projects.length}</span>
-              <span className="stat-label">Projects</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-value text-yellow">{profile.education.cgpa}</span>
-              <span className="stat-label">CGPA</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-value text-purple glow-purple">∞</span>
-              <span className="stat-label">Curiosity</span>
-            </div>
-          </div>
-        </div>
-      </CardTilt3D>
-    </div>
-  );
+function SkillsSection() {
+  return <PeriodicTable />;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -649,22 +544,16 @@ function ProjectsSection({ profile }) {
 
       <div className="projects-grid">
         {profile.projects.map((project, index) => (
-          <CardContainer key={index}>
-            <CardBody className="panel project-panel">
+          <CardTilt3D key={index}>
+            <div className="panel project-panel">
               <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <CardItem translateZ={35} className="project-header">
-                <CardItem as="span" translateZ={60} className="project-icon">
-                  <i className={project.icon}></i>
-                </CardItem>
-                <CardItem as="span" translateZ={50} className="project-name text-green glow-green">
-                  {project.name}
-                </CardItem>
-              </CardItem>
+              <div className="project-header">
+                <span className="project-icon"><i className={project.icon}></i></span>
+                <span className="project-name">{project.name}</span>
+              </div>
               <div className="panel-content">
-                <CardItem as="p" translateZ={28} className="project-description">
-                  {project.description}
-                </CardItem>
-                <CardItem translateZ={22} className="tech-stack">
+                <p className="project-description">{project.description}</p>
+                <div className="tech-stack">
                   <span className="text-muted">tech_stack: [</span>
                   <div className="tech-tags">
                     {project.tech.map((tech, i) => (
@@ -674,26 +563,26 @@ function ProjectsSection({ profile }) {
                     ))}
                   </div>
                   <span className="text-muted">]</span>
-                </CardItem>
+                </div>
               </div>
-              <CardItem translateZ={38} className="project-actions">
+              <div className="project-actions">
                 {project.liveUrl && (
                   <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-                    <span className="text-cyan">[</span>
-                    <span className="text-yellow"><i className="ri-external-link-line"></i> live</span>
-                    <span className="text-cyan">]</span>
+                    <span className="text-muted">[</span>
+                    <span className="text-secondary"><i className="ri-external-link-line"></i> live</span>
+                    <span className="text-muted">]</span>
                   </a>
                 )}
                 {project.sourceUrl && (
                   <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-                    <span className="text-cyan">[</span>
-                    <span className="text-yellow"><i className="ri-github-line"></i> source</span>
-                    <span className="text-cyan">]</span>
+                    <span className="text-muted">[</span>
+                    <span className="text-secondary"><i className="ri-github-line"></i> source</span>
+                    <span className="text-muted">]</span>
                   </a>
                 )}
-              </CardItem>
-            </CardBody>
-          </CardContainer>
+              </div>
+            </div>
+          </CardTilt3D>
         ))}
       </div>
     </div>
@@ -709,38 +598,40 @@ function ExperienceSection({ profile }) {
       <SectionHeader icon="ri-briefcase-line" title="Experience" />
 
       <div className="timeline">
-        <div className="timeline-item">
-          <div className="timeline-marker">
-            <span className="marker-dot"></span>
-            <span className="marker-line"></span>
-          </div>
-          <CardTilt3D>
-            <div className="panel experience-panel">
-              <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
-              <div className="exp-header">
-                <div className="exp-title-row">
-                  <span className="exp-role text-yellow glow-yellow">{profile.experience.role}</span>
-                  <span className="exp-duration text-muted">{profile.experience.duration}</span>
-                </div>
-                <div className="exp-company">
-                  <span className="text-cyan">@ {profile.experience.company}</span>
-                </div>
-              </div>
-              <div className="panel-content">
-                <p className="exp-description">{profile.experience.description}</p>
-                <div className="exp-highlights">
-                  <span className="text-muted">// highlights</span>
-                  {profile.experience.highlights.map((highlight, i) => (
-                    <div key={i} className="highlight-item">
-                      <span className="text-green">▸</span>
-                      <span>{highlight}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        {profile.experience.map((exp, index) => (
+          <div key={index} className="timeline-item">
+            <div className="timeline-marker">
+              <span className="marker-dot"></span>
+              <span className="marker-line"></span>
             </div>
-          </CardTilt3D>
-        </div>
+            <CardTilt3D>
+              <div className="panel experience-panel">
+                <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
+                <div className="exp-header">
+                  <div className="exp-title-row">
+                    <span className="exp-role">{exp.role}</span>
+                    <span className="exp-duration text-muted">{exp.duration}</span>
+                  </div>
+                  <div className="exp-company">
+                    <span className="text-secondary">@ {exp.company}</span>
+                  </div>
+                </div>
+                <div className="panel-content">
+                  <p className="exp-description">{exp.description}</p>
+                  <div className="exp-highlights">
+                    <span className="text-muted">// highlights</span>
+                    {exp.highlights.map((highlight, i) => (
+                      <div key={i} className="highlight-item">
+                        <span className="text-muted">▸</span>
+                        <span>{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardTilt3D>
+          </div>
+        ))}
       </div>
 
       <CardTilt3D>
@@ -774,24 +665,24 @@ function EducationSection({ profile }) {
           <div className="edu-header">
             <div className="edu-icon"><i className="ri-building-2-line"></i></div>
             <div className="edu-info">
-              <h3 className="edu-university text-cyan glow-cyan">{profile.education.university}</h3>
-              <p className="edu-degree text-green">{profile.education.degree}</p>
-              <p className="edu-spec text-purple">Specialization: {profile.education.specialization}</p>
+              <h3 className="edu-university">{profile.education.university}</h3>
+              <p className="edu-degree text-secondary">{profile.education.degree}</p>
+              <p className="edu-spec text-muted">Specialization: {profile.education.specialization}</p>
             </div>
           </div>
           <div className="panel-content">
             <div className="edu-stats">
               <div className="edu-stat">
                 <span className="stat-label">Year</span>
-                <span className="stat-value text-yellow">{profile.education.year}</span>
+                <span className="stat-value">{profile.education.year}</span>
               </div>
               <div className="edu-stat">
                 <span className="stat-label">CGPA</span>
-                <span className="stat-value text-green glow-green">{profile.education.cgpa}</span>
+                <span className="stat-value">{profile.education.cgpa}</span>
               </div>
               <div className="edu-stat">
                 <span className="stat-label">Status</span>
-                <span className="stat-value text-cyan">● Active</span>
+                <span className="stat-value text-green">● Active</span>
               </div>
             </div>
           </div>
@@ -805,8 +696,8 @@ function EducationSection({ profile }) {
           <div className="edu-header">
             <div className="edu-icon"><i className="ri-school-line"></i></div>
             <div className="edu-info">
-              <h3 className="edu-university text-cyan glow-cyan">{profile.schooling.school}</h3>
-              <p className="edu-degree text-green">{profile.schooling.degree}</p>
+              <h3 className="edu-university">{profile.schooling.school}</h3>
+              <p className="edu-degree text-secondary">{profile.schooling.degree}</p>
               <p className="edu-spec text-muted">{profile.schooling.location} • {profile.schooling.duration}</p>
             </div>
           </div>
@@ -814,11 +705,11 @@ function EducationSection({ profile }) {
             <div className="edu-stats">
               <div className="edu-stat">
                 <span className="stat-label">Class 12</span>
-                <span className="stat-value text-green glow-green">{profile.schooling.class12}</span>
+                <span className="stat-value">{profile.schooling.class12}</span>
               </div>
               <div className="edu-stat">
                 <span className="stat-label">Class 10</span>
-                <span className="stat-value text-green glow-green">{profile.schooling.class10}</span>
+                <span className="stat-value">{profile.schooling.class10}</span>
               </div>
             </div>
           </div>
@@ -834,11 +725,11 @@ function EducationSection({ profile }) {
             <div className="cert-list">
               {profile.certifications.map((cert, i) => (
                 <div key={i} className="cert-item">
-                  <span className="text-green">▸</span>
+                  <span className="text-muted">▸</span>
                   <span className="cert-name">{cert.name}</span>
                   <span className="text-muted"> — </span>
-                  <span className="text-cyan">{cert.provider}</span>
-                  {cert.badge && <span className="cert-badge text-yellow"> ({cert.badge})</span>}
+                  <span className="text-secondary">{cert.provider}</span>
+                  {cert.badge && <span className="cert-badge text-muted"> ({cert.badge})</span>}
                 </div>
               ))}
             </div>
@@ -854,7 +745,7 @@ function EducationSection({ profile }) {
             <div className="course-grid">
               {['Data Structures', 'Algorithms', 'Machine Learning', 'Web Development', 'Database Systems', 'AI Fundamentals'].map((course, i) => (
                 <div key={i} className="course-item">
-                  <span className="text-purple">◆</span>
+                  <span className="text-muted">◆</span>
                   <span>{course}</span>
                 </div>
               ))}
@@ -888,22 +779,22 @@ function ContactSection({ profile }) {
             <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} />
             <PanelHeader title="cat contact.json" />
             <div className="panel-content contact-json">
-              <span className="text-purple">{'{'}</span>
+              <span className="text-muted">{'{'}</span>
               {contactLinks.map((link, i) => (
                 <div key={i} className="json-row">
-                  <span className="json-key text-cyan">"{link.label.toLowerCase()}"</span>
+                  <span className="json-key text-muted">"{link.label.toLowerCase()}"</span>
                   <span className="text-muted">: </span>
                   {link.href ? (
-                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="json-value text-yellow">
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="json-value text-secondary">
                       "{link.value}"
                     </a>
                   ) : (
-                    <span className="json-value text-yellow">"{link.value}"</span>
+                    <span className="json-value text-secondary">"{link.value}"</span>
                   )}
                   {i < contactLinks.length - 1 && <span className="text-muted">,</span>}
                 </div>
               ))}
-              <span className="text-purple">{'}'}</span>
+              <span className="text-muted">{'}'}</span>
             </div>
           </div>
         </CardTilt3D>
@@ -919,14 +810,14 @@ function ContactSection({ profile }) {
               </p>
               <div className="cta-buttons">
                 <a href={`mailto:${profile.contact.email}`} className="cta-btn primary">
-                  <span className="text-green">[</span>
+                  <span className="text-muted">[</span>
                   <span><i className="ri-mail-line"></i> Send Email</span>
-                  <span className="text-green">]</span>
+                  <span className="text-muted">]</span>
                 </a>
                 <a href={`https://${profile.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="cta-btn">
-                  <span className="text-cyan">[</span>
+                  <span className="text-muted">[</span>
                   <span><i className="ri-linkedin-box-line"></i> LinkedIn</span>
-                  <span className="text-cyan">]</span>
+                  <span className="text-muted">]</span>
                 </a>
               </div>
             </div>
@@ -945,7 +836,7 @@ function SectionHeader({ icon, title }) {
     <div className="section-header">
       <span className="header-line">╭──</span>
       <span className="header-icon"><i className={icon}></i></span>
-      <span className="header-title text-cyan glow-cyan">{title}</span>
+      <span className="header-title">{title}</span>
       <span className="header-line flex">────────────────────────────────────────────╮</span>
     </div>
   );
@@ -956,7 +847,7 @@ function PanelHeader({ title, icon }) {
     <div className="panel-header">
       <span className="text-muted">$</span>
       {icon && <span className="panel-icon"><i className={icon}></i></span>}
-      <span className="text-green"> {title}</span>
+      <span className="text-secondary">{title}</span>
     </div>
   );
 }
@@ -984,45 +875,25 @@ function BootScreen() {
   ];
 
   useEffect(() => {
-    setBootLines([]);
-    const timeouts = bootSequence.map(({ text, delay }) =>
+    bootSequence.forEach(({ text, delay }) => {
       setTimeout(() => {
         setBootLines(prev => [...prev, text]);
-      }, delay)
-    );
-
-    return () => {
-      timeouts.forEach(timeoutId => clearTimeout(timeoutId));
-    };
+      }, delay);
+    });
   }, []);
 
   return (
     <div className="boot-screen">
       <div className="boot-content">
-        {bootLines.map((line, index) => {
-          const hasText = line.trim().length > 0;
-          const steps = Math.max(6, line.length);
-          const duration = Math.min(2.2, Math.max(0.4, line.length * 0.035));
-
-          return (
-            <div
-              key={index}
-              className={`boot-line ${hasText ? 'typing' : ''} ${line.includes('✓') ? 'text-green' : ''} ${line.includes('█▓') ? 'text-cyan glow-cyan' : ''}`}
-              style={
-                hasText
-                  ? {
-                      '--typing-steps': String(steps),
-                      '--typing-duration': `${duration}s`,
-                      '--typing-width': `${line.length}ch`,
-                    }
-                  : undefined
-              }
-            >
-              {line}
-            </div>
-          );
-        })}
-        <span className="cursor-blink text-green">█</span>
+        {bootLines.map((line, index) => (
+          <div
+            key={index}
+            className={`boot-line ${line.includes('✓') ? 'text-secondary' : ''} ${line.includes('█▓') ? 'text-muted' : ''}`}
+          >
+            {line}
+          </div>
+        ))}
+        <span className="cursor-blink text-muted">█</span>
       </div>
     </div>
   );

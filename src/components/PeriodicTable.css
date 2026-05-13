@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════════ */
+/* PERIODIC TABLE OF SKILLS                                       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+.periodic-table-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.periodic-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  letter-spacing: 0.3px;
+}
+
+.periodic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 6px;
+  margin-bottom: 32px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Individual element cell */
+.element-cell {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  cursor: default;
+  transition: all 0.2s ease;
+  padding: 4px;
+  min-width: 0;
+}
+
+.element-cell:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Atomic number */
+.element-number {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+/* Symbol (big text) */
+.element-symbol {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+/* Full name */
+.element-name {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  text-transform: lowercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+/* Empty spacer cells */
+.element-cell.spacer {
+  visibility: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* RESPONSIVE                                                      */
+/* ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .periodic-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 4px;
+  }
+  
+  .element-symbol {
+    font-size: 1rem;
+  }
+  
+  .element-name {
+    font-size: 0.45rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .periodic-grid {
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 3px;
+  }
+
+  .element-symbol {
+    font-size: 0.9rem;
+  }
+  
+  .element-number {
+    font-size: 0.45rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LIGHT THEME                                                     */
+/* ═══════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] .element-cell {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="light"] .element-cell:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}

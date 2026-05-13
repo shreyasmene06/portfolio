@@ -15,14 +15,14 @@ function Sidebar({ activeSection, onSectionChange, profile }) {
       <div className="sidebar-header">
         <div className="logo-container">
           <div className="logo">
-            <span className="logo-bracket text-purple">[</span>
-            <span className="logo-text text-cyan glow-cyan">SM</span>
-            <span className="logo-bracket text-purple">]</span>
+            <span className="logo-bracket text-muted">[</span>
+            <span className="logo-text" style={{ fontFamily: 'var(--font-serif)', color: 'var(--text-primary)' }}>SM</span>
+            <span className="logo-bracket text-muted">]</span>
           </div>
-          <div className="logo-name text-green">shreyas</div>
+          <div className="logo-name" style={{ color: 'var(--text-secondary)' }}>shreyas</div>
         </div>
         <div className="version-tag">
-          <span className="text-muted">v1.0.0</span>
+          <span className="text-muted">v2.0.0</span>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ function Sidebar({ activeSection, onSectionChange, profile }) {
               title={item.label}
             >
               <span className="nav-indicator">{activeSection === item.id ? '▸' : ' '}</span>
-              <span className={`nav-icon ${activeSection === item.id ? 'text-cyan' : 'text-muted'}`}><i className={item.icon}></i></span>
+              <span className={`nav-icon ${activeSection === item.id ? '' : 'text-muted'}`} style={activeSection === item.id ? { color: 'var(--text-primary)' } : {}}><i className={item.icon}></i></span>
               <span className="nav-label">{item.label}</span>
               <span className="nav-shortcut text-muted">{item.shortcut}</span>
             </button>
@@ -60,7 +60,7 @@ function Sidebar({ activeSection, onSectionChange, profile }) {
       <div className="sidebar-stats">
         <div className="stat-row">
           <span className="text-muted">CGPA:</span>
-          <span className="text-green glow-green">{profile?.education?.cgpa || '9.02'}</span>
+          <span style={{ color: 'var(--text-primary)' }}>{profile?.education?.cgpa || '9.02'}</span>
         </div>
         <div className="stat-row">
           <span className="text-muted">Status:</span>
@@ -104,7 +104,7 @@ function Sidebar({ activeSection, onSectionChange, profile }) {
         </div>
         
         <div className="copyright">
-          <span className="text-muted">© 2024 shreyas</span>
+          <span className="text-muted">© 2026 shreyas</span>
         </div>
       </div>
     </aside>
